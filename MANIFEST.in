@@ -1,0 +1,7 @@
+include README.md
+include LICENSE
+include MANIFEST.in
+
+include events-protocol-core/VERSION
+
+global-exclude __pycache__ *.py[cod]
