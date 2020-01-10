@@ -1,1 +1,1 @@
-# events-protocol-core
+# events-protocol
