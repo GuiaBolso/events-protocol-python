@@ -61,6 +61,9 @@ docs/_build/
 # pyenv
 .python-version
 
+# vscode
+.vscode/
+
 # Environments
 .env
 .venv
