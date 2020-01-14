@@ -1,0 +1,26 @@
+name: Black Check and Tests
+
+on:
+  pull_request:
+    branchs:
+      - master
+  push:
+    branchs:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+      - uses: dschep/install-pipenv-action@v1
+      - name: Install dependencies
+        run: pipenv sync -d
+      - name: Lint with Black
+        run: pipenv run black --check events_protocol
+      - name: Tests
+        run: pipenv run pytest --cov=events_protocol tests/
