@@ -2,7 +2,11 @@ from typing import Optional
 
 from .http import HttpClient
 from .model.response import Response
-from .exception.request_exception import TimeoutException, FailedDependencyException, BadProtocolException
+from .exception.request_exception import (
+    TimeoutException,
+    FailedDependencyException,
+    BadProtocolException,
+)
 from ..core.model.event import RequestEvent, ResponseEvent, RawEvent
 from ..core.validation.strict_event_validator import StrictEventValidator
 from ..core.exception.event_exception import EventValidationException
@@ -14,16 +18,15 @@ class EventClient:
         self.event_validator = StrictEventValidator()
         self.default_timeout = 60000
 
-    def send_event(self, url: str, request_event: RequestEvent, timeout: Optional[int] = None) -> Response:
+    def send_event(
+        self, url: str, request_event: RequestEvent, timeout: Optional[int] = None
+    ) -> Response:
         try:
             response = self.http_client.post(
                 url=url,
-                headers={
-                    'Content-Type': 'application/json',
-                    'charset': 'UTF-8',
-                },
+                headers={"Content-Type": "application/json", "charset": "UTF-8",},
                 payload=request_event.to_json(),
-                timeout=timeout or self.default_timeout
+                timeout=timeout or self.default_timeout,
             )
             event = self.parse_event(response)
         except TimeoutException as e:

@@ -28,11 +28,8 @@ class EventBuilder:
 
     def build_request_event(self) -> RequestEvent:
         self.__validate_fields()
-        return RequestEvent(
-            name=self.name
-            version=self.version
-        )
-    
+        return RequestEvent(name=self.name, version=self.version)
+
     def __validate_fields(self):
         if not self.name:
             raise MissingEventInformationException("Missing event name.")
