@@ -1,10 +1,10 @@
 from typing import Any
 
-from ..model.event import RawEvent, ResponseEvent, RequestEvent
-from ..exception.event_exception import EventValidationException
+from .model.event import RawEvent, ResponseEvent, RequestEvent
+from .exception.event_exception import EventValidationException
 
 
-class StrictEventValidator:
+class EventValidator:
     def validate_as_response_event(self, raw_event: RawEvent) -> ResponseEvent:
         return ResponseEvent(
             name=self.__get_required_property(raw_event, "name"),
