@@ -1,13 +1,13 @@
 from unittest import TestCase
 
 from events_protocol.core.model.event import RawEvent
-from events_protocol.core.validation.strict_event_validator import StrictEventValidator
+from events_protocol.core.validation import EventValidator
 from events_protocol.core.exception.event_exception import EventValidationException
 
 
-class StrictEventValidatorForResponseTest(TestCase):
+class EventValidatorForResponseTest(TestCase):
     def setUp(self):
-        self.validator = StrictEventValidator()
+        self.validator = EventValidator()
     
     def test_response_validation(self):
         raw_event = RawEvent(
@@ -153,9 +153,9 @@ class StrictEventValidatorForResponseTest(TestCase):
             self.validator.validate_as_response_event(raw_event)
 
 
-class StrictEventValidatorForRequestTest(TestCase):
+class EventValidatorForRequestTest(TestCase):
     def setUp(self):
-        self.validator = StrictEventValidator()
+        self.validator = EventValidator()
     
     def test_request_validation(self):
         raw_event = RawEvent(
