@@ -17,6 +17,7 @@ setup(
         "License :: OSI Approved :: Apache-2.0 License",
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     python_requires=">=3.7",
