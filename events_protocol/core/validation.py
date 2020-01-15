@@ -1,7 +1,7 @@
 from typing import Any
 
 from .model.event import RawEvent, ResponseEvent, RequestEvent
-from .exception.event_exception import EventValidationException
+from .exception import EventValidationException
 
 
 class EventValidator:

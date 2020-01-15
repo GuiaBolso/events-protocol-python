@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from events_protocol.core.model.event import RawEvent
 from events_protocol.core.validation import EventValidator
-from events_protocol.core.exception.event_exception import EventValidationException
+from events_protocol.core.exception import EventValidationException
 
 
 class EventValidatorForResponseTest(TestCase):
