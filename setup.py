@@ -6,7 +6,7 @@ with open(join(dirname(__file__), "events_protocol/VERSION")) as _file:
     version = _file.read().strip()
 
 
-with open(join(dirname(__file__), "README.md") as _file:
+with open(join(dirname(__file__), "README.md")) as _file:
     long_description = _file.read()
 
 
