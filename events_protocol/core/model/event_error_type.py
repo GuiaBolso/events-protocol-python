@@ -12,3 +12,10 @@ class EventErrorType(Enum):
     RESOURCE_DENIED = "resourceDenied"
     EXPIRED = "expired"
     UNKNOWN = "unknown"
+
+    @classmethod
+    def get_error_type(cls, error: str):
+        try:
+            return cls(error)
+        except ValueError:
+            return cls.UNKNOWN
