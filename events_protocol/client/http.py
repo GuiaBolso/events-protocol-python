@@ -4,7 +4,7 @@ from typing import Dict, Any
 
 from requests.exceptions import Timeout, ReadTimeout, ConnectTimeout
 
-from ..exception.request_exception import TimeoutException, FailedDependencyException
+from .exception.request_exception import TimeoutException, FailedDependencyException
 
 
 class HttpClient:
