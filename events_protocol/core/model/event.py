@@ -5,6 +5,8 @@ from typing import Dict, Generic, Optional, Any
 
 from dataclasses_json import dataclass_json, LetterCase
 
+from .event_error_type import EventErrorType
+
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass
@@ -50,10 +52,14 @@ class ResponseEvent(Event):
 
     @property
     def is_error(self) -> bool:
-        return not self.is_success and not self.is_error
+        return not self.is_success and not self.is_redirect
 
-    def get_error_type(self) -> None:
-        raise NotImplementedError('Method "get_error_type" is not implemented yet')
+    @property
+    def error_type(self) -> EventErrorType:
+        if self.is_error:
+            error = self.name.split(":")[-1]
+            return EventErrorType.get_error_type(error)
+        raise ValueError("This is not an error event.")
 
 
 @dataclass
