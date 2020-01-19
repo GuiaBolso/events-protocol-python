@@ -13,12 +13,12 @@ from .event_error_type import EventErrorType
 class Event(ABC):
     name: str
     version: int
-    payload: Dict
+    payload: Dict[str, Any]
     id: Optional[str] = field(default_factory=lambda: str(uuid4()))
     flow_id: Optional[str] = field(default_factory=lambda: str(uuid4()))
-    identity: Optional[Dict] = field(default_factory=dict)
-    auth: Optional[Dict] = field(default_factory=dict)
-    metadata: Optional[Dict] = field(default_factory=dict)
+    identity: Optional[Dict[str, Any]] = field(default_factory=dict)
+    auth: Optional[Dict[str, Any]] = field(default_factory=dict)
+    metadata: Optional[Dict[str, Any]] = field(default_factory=dict)
 
     def payload_as(self, clazz: Generic) -> Generic:
         return clazz.from_dict(self.payload)
@@ -71,16 +71,3 @@ class RequestEvent(Event):
 class EventMessage:
     code: str
     parameters: Dict[str, Optional[Any]]
-
-
-@dataclass_json(letter_case=LetterCase.CAMEL)
-@dataclass
-class RawEvent:
-    name: Optional[str]
-    version: Optional[int]
-    id: Optional[str]
-    flow_id: Optional[str]
-    payload: Optional[Dict[str, Optional[Any]]]
-    identity: Optional[Dict[str, Optional[Any]]]
-    auth: Optional[Dict[str, Optional[Any]]]
-    metadata: Optional[Dict[str, Optional[Any]]]

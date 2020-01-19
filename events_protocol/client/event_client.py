@@ -3,14 +3,12 @@ from typing import Optional, Dict
 
 from .http import HttpClient
 from .exception.request_exception import BadProtocolException
-from ..core.model.event import RequestEvent, ResponseEvent, RawEvent
-from ..core.validation import EventValidator
+from ..core.model.event import RequestEvent, ResponseEvent
 
 
 class EventClient:
     def __init__(self):
         self.http_client = HttpClient()
-        self.event_validator = EventValidator()
         self.default_timeout = 60000
 
     def send_event(
@@ -44,9 +42,7 @@ class EventClient:
 
     def parse_event(self, raw_response: str) -> ResponseEvent:
         try:
-            raw_event = RawEvent.from_json(raw_response)
-            # TODO: Verify if this bellow line is necessary
-            return self.event_validator.validate_as_response_event(raw_event)
+            return ResponseEvent.from_json(raw_response)
         except KeyError as e:
             raise BadProtocolException("Error on parsing event response")
 
