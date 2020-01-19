@@ -1,6 +1,6 @@
 from abc import ABC
-from uuid import UUID
-from dataclasses import dataclass
+from uuid import uuid4
+from dataclasses import dataclass, field
 from typing import Dict, Generic, Optional, Any
 
 from dataclasses_json import dataclass_json, LetterCase
@@ -13,12 +13,12 @@ from .event_error_type import EventErrorType
 class Event(ABC):
     name: str
     version: int
-    id: UUID
-    flow_id: UUID
     payload: Dict
-    identity: Dict
-    auth: Dict
-    metadata: Dict
+    id: Optional[str] = field(default_factory=lambda: str(uuid4()))
+    flow_id: Optional[str] = field(default_factory=lambda: str(uuid4()))
+    identity: Optional[Dict] = field(default_factory=dict)
+    auth: Optional[Dict] = field(default_factory=dict)
+    metadata: Optional[Dict] = field(default_factory=dict)
 
     def payload_as(self, clazz: Generic) -> Generic:
         return clazz.from_dict(self.payload)
@@ -78,8 +78,8 @@ class EventMessage:
 class RawEvent:
     name: Optional[str]
     version: Optional[int]
-    id: Optional[UUID]
-    flow_id: Optional[UUID]
+    id: Optional[str]
+    flow_id: Optional[str]
     payload: Optional[Dict[str, Optional[Any]]]
     identity: Optional[Dict[str, Optional[Any]]]
     auth: Optional[Dict[str, Optional[Any]]]
