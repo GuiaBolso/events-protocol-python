@@ -13,6 +13,7 @@ with open(join(dirname(__file__), "README.md")) as _file:
 setup(
     name="events-protocol",
     version=version,
+    author="Guiabolso",
     description="Library to be a Client and Server using event protocol",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -39,6 +40,7 @@ setup(
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3 :: Only",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     python_requires=">=3.7",
