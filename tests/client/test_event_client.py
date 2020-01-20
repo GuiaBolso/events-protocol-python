@@ -10,7 +10,7 @@ from events_protocol.client.exception.request_exception import BadProtocolExcept
 
 class EventClientTest(TestCase):
     def setUp(self):
-        self.client = EventClient()
+        self.client = EventClient("http://test.com/events/")
 
     @patch("events_protocol.client.event_client.HttpClient.post")
     def test_success_response(self, post_method):
@@ -24,7 +24,7 @@ class EventClientTest(TestCase):
         )
 
         post_method.return_value = response_event.to_json()
-        response = self.client.send_event("url", **event)
+        response = self.client.send_event(**event)
 
         self.assertTrue(response.is_success)
         self.assertEqual(response, response_event)
@@ -41,7 +41,7 @@ class EventClientTest(TestCase):
         )
 
         post_method.return_value = response_event.to_json()
-        response = self.client.send_event("url", **event)
+        response = self.client.send_event(**event)
 
         self.assertTrue(response.is_error)
         self.assertEqual(EventErrorType.GENERIC, response.error_type)
@@ -58,4 +58,4 @@ class EventClientTest(TestCase):
         post_method.return_value = "{}"
 
         with self.assertRaises(BadProtocolException):
-            response = self.client.send_event("url", **event)
+            response = self.client.send_event(**event)

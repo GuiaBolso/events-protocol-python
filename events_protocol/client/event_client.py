@@ -7,13 +7,13 @@ from ..core.model.event import RequestEvent, ResponseEvent
 
 
 class EventClient:
-    def __init__(self):
+    def __init__(self, url: str):
+        self.url = url
         self.http_client = HttpClient()
         self.default_timeout = 60000
 
     def send_event(
         self,
-        url: str,
         name: str,
         version: int,
         payload: Optional[Dict] = {},
@@ -27,13 +27,13 @@ class EventClient:
         request_event = self.build_request_event(
             name, version, payload, id, flow_id, identity, auth, metadata
         )
-        return self.send_request_event(url, request_event, timeout)
+        return self.send_request_event(request_event, timeout)
 
     def send_request_event(
-        self, url: str, request_event: RequestEvent, timeout: Optional[int] = None
+        self, request_event: RequestEvent, timeout: Optional[int] = None
     ) -> ResponseEvent:
         response = self.http_client.post(
-            url=url,
+            url=self.url,
             headers={"Content-Type": "application/json", "charset": "UTF-8",},
             payload=request_event.to_json(),
             timeout=timeout or self.default_timeout,
