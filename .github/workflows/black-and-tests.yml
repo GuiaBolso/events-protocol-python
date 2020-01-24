@@ -22,6 +22,20 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: ${{ matrix.python_version }}
+      - uses: actions/cache@v1
+        if: startsWith(runner.os, 'Linux')
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ matrix.python_version }}-${{ hashFiles('**/Pipfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-${{ matrix.python_version }}-
+      - uses: actions/cache@v1
+        if: startsWith(runner.os, 'macOS')
+        with:
+          path: ~/Library/Caches/pip
+          key: ${{ runner.os }}-pip-${{ matrix.python_version }}-${{ hashFiles('**/Pipfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-${{ matrix.python_version }}-
       - uses: dschep/install-pipenv-action@v1
       - name: Install dependencies
         run: pipenv --python ${{ matrix.python_version }} sync -d
