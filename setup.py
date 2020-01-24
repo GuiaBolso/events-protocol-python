@@ -32,7 +32,7 @@ setup(
         "stringcase==1.2.0",
         "typing-extensions==3.7.4.1",
         "typing-inspect==0.5.0",
-        "urllib3==1.25.7",
+        "urllib3==1.25.8",
     ],
     classifiers=[
         "Intended Audience :: Developers",
