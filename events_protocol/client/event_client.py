@@ -4,6 +4,7 @@ from typing import Optional, Dict
 from .http import HttpClient
 from .exception.request_exception import BadProtocolException
 from ..core.model.event import RequestEvent, ResponseEvent
+from ..core.context import _context
 
 
 class EventClient:
@@ -56,13 +57,16 @@ class EventClient:
         identity: Dict = {},
         auth: Dict = {},
         metadata: Dict = {},
-    ):
+    ) -> RequestEvent:
+        context_id = getattr(_context.get(), "id", None)
+        context_flow_id = getattr(_context.get(), "flow_id", None)
+
         return RequestEvent(
             name=name,
             version=version,
             payload=payload,
-            id=id or str(uuid4()),
-            flow_id=flow_id or str(uuid4()),
+            id=context_id or id or str(uuid4()),
+            flow_id=context_flow_id or flow_id or str(uuid4()),
             identity=identity,
             auth=auth,
             metadata=metadata,
