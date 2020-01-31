@@ -17,3 +17,7 @@ coverage:
 	@coverage html --include=events_protocol/*
 	@firefox htmlcov/index.html
 
+dev:
+	@pipenv install --dev
+	@pipenv shell
+	@pre-commit install
