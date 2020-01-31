@@ -1,24 +1,20 @@
 from abc import ABC
-from uuid import uuid4
-from dataclasses import dataclass, field
-from typing import Dict, Generic, Optional, Any
+from typing import Any, Dict, Generic, Optional, Union
+from uuid import UUID, uuid4
 
-from dataclasses_json import dataclass_json, LetterCase
-
+from .base import PascalPydanticMixin
 from .event_error_type import EventErrorType
 
 
-@dataclass_json(letter_case=LetterCase.CAMEL)
-@dataclass
-class Event(ABC):
+class Event(PascalPydanticMixin):
     name: str
     version: int
     payload: Dict[str, Any]
-    id: Optional[str] = field(default_factory=lambda: str(uuid4()))
-    flow_id: Optional[str] = field(default_factory=lambda: str(uuid4()))
-    identity: Optional[Dict[str, Any]] = field(default_factory=dict)
-    auth: Optional[Dict[str, Any]] = field(default_factory=dict)
-    metadata: Optional[Dict[str, Any]] = field(default_factory=dict)
+    id: Optional[str] = str(uuid4())
+    flow_id: Optional[str] = str(uuid4())
+    identity: Optional[Dict[str, Any]] = dict
+    auth: Optional[Dict[str, Any]] = dict
+    metadata: Optional[Dict[str, Any]] = dict
 
     def payload_as(self, clazz: Generic) -> Generic:
         return clazz.from_dict(self.payload)
@@ -40,7 +36,6 @@ class Event(ABC):
             return self.metadata.get("origin")
 
 
-@dataclass
 class ResponseEvent(Event):
     @property
     def is_success(self) -> bool:
@@ -62,12 +57,10 @@ class ResponseEvent(Event):
         raise ValueError("This is not an error event.")
 
 
-@dataclass
 class RequestEvent(Event):
     pass
 
 
-@dataclass
-class EventMessage:
+class EventMessage(PascalPydanticMixin):
     code: str
     parameters: Dict[str, Optional[Any]]
