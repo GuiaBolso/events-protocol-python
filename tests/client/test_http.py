@@ -1,7 +1,6 @@
 from unittest import TestCase
 from unittest.mock import patch, MagicMock
 
-from requests import Response
 from requests.exceptions import Timeout, ReadTimeout, ConnectTimeout
 
 from events_protocol.client.http import HttpClient

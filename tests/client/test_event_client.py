@@ -1,8 +1,7 @@
 from unittest import TestCase
 from unittest.mock import patch
-from uuid import uuid4
 
-from events_protocol.core.model.event import RequestEvent, ResponseEvent
+from events_protocol.core.model.event import ResponseEvent
 from events_protocol.core.model.event_error_type import EventErrorType
 from events_protocol.core.context import _context, EventContext
 from events_protocol.client.event_client import EventClient
@@ -59,7 +58,7 @@ class EventClientTest(TestCase):
         post_method.return_value = "{}"
 
         with self.assertRaises(BadProtocolException):
-            response = self.client.send_event(**event)
+            self.client.send_event(**event)
 
 
 class BuildEventTest(TestCase):
@@ -98,7 +97,8 @@ class BuildEventTest(TestCase):
         self.assertEqual(event["flow_id"], builded_event.flow_id)
 
     def test_build_event_without_pass_id_and_flow_id(self):
-        event = {"name": "event:name", "version": 1, "payload": {"test": "test"}}
+        event = {"name": "event:name", "version": 1,
+                 "payload": {"test": "test"}}
         builded_event = self.client.build_request_event(**event)
 
         self.assertIsNotNone(builded_event.id)
