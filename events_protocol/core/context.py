@@ -16,5 +16,8 @@ class EventContext:
     def flow_id(self):
         return self.__flow_id
 
+    def to_dict(self):
+        return dict(id=self.__id, flow_id=self.__flow_id)
+
 
 _context: ContextVar[EventContext] = ContextVar("event_context", default=None)

@@ -4,18 +4,27 @@ from .model.event_error_type import EventErrorType
 
 
 class EventException(RuntimeError):
-    def __init__(
-        self,
-        code: str,
-        parameters: Dict[str, Optional[Any]],
-        event_error_type: EventErrorType = EventErrorType.GENERIC,
-        expected: bool = False,
-    ):
-        super().__init__(code, parameters, event_error_type, expected)
-        self.code = code
+    _CODE: str = None
+    _TYPE: EventErrorType = EventErrorType.GENERIC
+
+    def __init__(self,
+                 parameters: Dict[str, Optional[Any]],
+                 expected: bool = False,):
+        super().__init__(self._CODE, parameters, self._TYPE, expected)
+        self.code = self._CODE
         self.parameters = parameters
-        self.event_error_type = event_error_type
+        self.event_error_type = self._TYPE
         self.expected = expected
+
+
+class MessagebleEventException(EventException):
+    def __init__(self, message: str):
+        super().__init__(parameters={"message": message})
+
+
+class EventNotFoundException(MessagebleEventException):
+    _CODE = "EVENT_NOT_FOUND"
+    _TYPE = EventErrorType.NOT_FOUND
 
 
 class MissingEventInformationException(EventException):
@@ -28,27 +37,13 @@ class EventValidationException(EventException):
 
     def __init__(self, property_name: str) -> None:
         super().__init__(
-            code=self.__CODE,
-            parameters={"missingProperty": property_name,},
-            event_error_type=self.__TYPE,
+            parameters={"missingProperty": property_name, },
         )
 
 
-class EventFailedDependencyException(EventException):
-    __CODE = "FAILED_DEPENDENCY"
-    __TYPE = EventErrorType.GENERIC
-
-    def __init__(self, message: str):
-        super().__init__(
-            code=self.__CODE, parameters={"message": message,}, event_error_type=self.__TYPE,
-        )
+class EventFailedDependencyException(MessagebleEventException):
+    _CODE = "FAILED_DEPENDENCY"
 
 
-class EventTimeoutException(EventException):
-    __CODE = "EVENT_TIMEOUT"
-    __TYPE = EventErrorType.GENERIC
-
-    def __init__(self, message: str):
-        super().__init__(
-            code=self.__CODE, parameters={"message": message,}, event_error_type=self.__TYPE,
-        )
+class EventTimeoutException(MessagebleEventException):
+    _CODE = "EVENT_TIMEOUT"
