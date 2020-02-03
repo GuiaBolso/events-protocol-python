@@ -25,7 +25,7 @@ class JsonLogger(logging.LoggerAdapter):
         self, context: EventContext = None
     ):
         self.logger = _logger
-        self._context = context or EventContext()
+        self._context = context or EventContext("UNDEFINED", "UNDEFINED")
 
     def log(self, level, msg, *args, **kwargs):
         if self.isEnabledFor(level):
