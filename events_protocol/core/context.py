@@ -1,23 +1,41 @@
+import typing
+from contextlib import asynccontextmanager
 from contextvars import ContextVar
+from uuid import UUID
+
+from events_protocol.core.model.base import BaseModel
+
+IdType = typing.Union[str, UUID]
 
 
-class EventContext:
-    __slots__ = ["__id", "__flow_id"]
-
-    def __init__(self, id, flow_id):
-        self.__id = id
-        self.__flow_id = flow_id
-
-    @property
-    def id(self):
-        return self.__id
-
-    @property
-    def flow_id(self):
-        return self.__flow_id
-
-    def to_dict(self):
-        return dict(id=self.__id, flow_id=self.__flow_id)
+class EventContext(BaseModel):
+    id: typing.Optional[IdType]
+    flow_id: typing.Optional[IdType]
+    name: typing.Optional[str]
 
 
 _context: ContextVar[EventContext] = ContextVar("event_context", default=None)
+
+
+class EventContextHolder:
+    @staticmethod
+    def get() -> EventContext:
+        return _context.get() or EventContext()
+
+    @staticmethod
+    def set(event_context: EventContext) -> None:
+        _context.set(event_context)
+
+    @staticmethod
+    def clean() -> None:
+        _context.set(None)
+
+    @classmethod
+    @asynccontextmanager
+    async def with_context(cls, context_id: IdType, context_flow_id: IdType, event_name: str):
+        try:
+            event_context = EventContext(id=context_id, flow_id=context_flow_id, name=event_name)
+            cls.set(event_context)
+            yield cls.get()
+        finally:
+            cls.clean()

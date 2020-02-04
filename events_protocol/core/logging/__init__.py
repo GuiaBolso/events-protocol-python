@@ -5,7 +5,7 @@ import sys
 import typing
 from logging.handlers import QueueHandler, QueueListener
 
-from events_protocol.core.context import EventContext
+from events_protocol.core.context import EventContextHolder, EventContext
 
 logging.basicConfig(level=logging.INFO, format="%(message)s")
 _q = queue.Queue(-1)
@@ -19,20 +19,15 @@ _ql.start()
 
 
 class JsonLogger(logging.LoggerAdapter):
-    _context: EventContext
-
-    def __init__(
-        self, context: EventContext = None
-    ):
+    def __init__(self,):
         self.logger = _logger
-        self._context = context or EventContext("UNDEFINED", "UNDEFINED")
 
     def log(self, level, msg, *args, **kwargs):
         if self.isEnabledFor(level):
             _msg = dict(
                 level=logging.getLevelName(level),
                 message=msg,
-                context=self._context.to_dict()
+                context=EventContextHolder.get().to_dict(),
             )
             extra = kwargs.pop("extra", None)
             if extra:
@@ -46,6 +41,3 @@ class JsonLogger(logging.LoggerAdapter):
 
                 kwargs["exc_info"] = False
             self.logger.log(level, msg, *args, **kwargs)
-
-
-DEFAULT_LOGGER_ADAPTER = JsonLogger(context=None)
