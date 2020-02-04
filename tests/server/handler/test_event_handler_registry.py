@@ -1,13 +1,12 @@
 from unittest import TestCase
 
 from events_protocol.server.handler.event_handler import EventHandler
-from events_protocol.server.handler.event_handler_discovery import \
-    EventDiscovery
+from events_protocol.server.handler.event_handler_discovery import EventDiscovery
 from events_protocol.server.handler.event_handler_registry import EventRegister
 
 
 class _TestEventHandler(EventHandler):
-    async def execute():
+    async def handle():
         pass
 
 
@@ -17,6 +16,6 @@ class TestEventRegister(TestCase):
             event_name = "event:top:zera"
             event_version = 1
             event_handler = _TestEventHandler
-        event = EventDiscovery.get(
-            EventTester.event_name, EventTester.event_version)
+
+        event = EventDiscovery.get(EventTester.event_name, EventTester.event_version)
         self.assertEqual(event, _TestEventHandler)
