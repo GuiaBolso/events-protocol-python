@@ -1,20 +1,27 @@
-from typing import Dict, Any, Optional
+from typing import Any, Dict, Optional, Union
 
-from .model.event_error_type import EventErrorType
+from .model.event_type import EventErrorType
+from .model.event_code import EventCode
 
 
 class EventException(RuntimeError):
-    _CODE: str = None
+    _CODE: str = ""
     _TYPE: EventErrorType = EventErrorType.GENERIC
 
-    def __init__(self,
-                 parameters: Dict[str, Optional[Any]],
-                 expected: bool = False,):
+    def __init__(
+        self, parameters: Dict[str, Optional[Any]], expected: bool = False,
+    ):
         super().__init__(self._CODE, parameters, self._TYPE, expected)
-        self.code = self._CODE
         self.parameters = parameters
-        self.event_error_type = self._TYPE
         self.expected = expected
+
+    @property
+    def code(self) -> str:
+        return self._CODE
+
+    @property
+    def event_error_type(self) -> EventErrorType:
+        return self._TYPE
 
 
 class MessagebleEventException(EventException):
@@ -28,17 +35,13 @@ class EventNotFoundException(MessagebleEventException):
 
 
 class MissingEventInformationException(EventException):
-    pass
+    _CODE = "MISSING_FIELDS"
+    _TYPE = EventErrorType.BAD_REQUEST
 
 
-class EventValidationException(EventException):
-    __CODE = "INVALID_COMMUNICATION_PROTOCOL"
-    __TYPE = EventErrorType.BAD_REQUEST
-
-    def __init__(self, property_name: str) -> None:
-        super().__init__(
-            parameters={"missingProperty": property_name, },
-        )
+class EventParsingException(EventException):
+    _CODE = "INVALID_COMMUNICATION_PROTOCOL"
+    _TYPE = EventErrorType.BAD_PROTOCOL
 
 
 class EventFailedDependencyException(MessagebleEventException):

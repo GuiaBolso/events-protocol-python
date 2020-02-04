@@ -2,16 +2,14 @@ import json
 from typing import Dict, Optional, Union
 from uuid import uuid4
 
-from pydantic import ValidationError
-
-from ..core.context import _context
+from ..core.context import EventContextHolder
+from ..core.model.base import ValidationError
 from ..core.model.event import RequestEvent, ResponseEvent
 from .exception.request_exception import BadProtocolException
 from .http import HttpClient
 
 
 class EventClient:
-
     def __init__(self, url: str):
         self.url = url
         self.http_client = HttpClient()
@@ -39,7 +37,7 @@ class EventClient:
     ) -> ResponseEvent:
         response = self.http_client.post(
             url=self.url,
-            headers={"Content-Type": "application/json", "charset": "UTF-8", },
+            headers={"Content-Type": "application/json", "charset": "UTF-8",},
             payload=request_event.to_json(),
             timeout=timeout or self.default_timeout,
         )
@@ -47,7 +45,7 @@ class EventClient:
 
     def parse_event(self, raw_response: str) -> ResponseEvent:
         try:
-            return ResponseEvent(**json.loads(raw_response))
+            return ResponseEvent.from_json(raw_response)
         except (KeyError, ValidationError) as e:
             raise BadProtocolException("Error on parsing event response")
 
@@ -62,14 +60,13 @@ class EventClient:
         auth: Dict = {},
         metadata: Dict = {},
     ) -> RequestEvent:
-        context_id = getattr(_context.get(), "id", None)
-        context_flow_id = getattr(_context.get(), "flow_id", None)
+        context = EventContextHolder.get()
         return RequestEvent(
             name=name,
             version=version,
             payload=payload,
-            id=context_id or id or str(uuid4()),
-            flow_id=context_flow_id or flow_id or str(uuid4()),
+            id=context.id or id or str(uuid4()),
+            flow_id=context.flow_id or flow_id or str(uuid4()),
             identity=identity,
             auth=auth,
             metadata=metadata,
