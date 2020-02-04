@@ -2,13 +2,21 @@ import typing
 from abc import ABC, abstractmethod
 from unittest import TestCase
 
+from events_protocol.core.exception import EventException, MissingEventInformationException
 from events_protocol.core.model.base import PascalPydanticMixin
+from events_protocol.core.model.event import Event, ValidationError, ResponseEvent, RequestEvent
 
 
 class EventHandler(ABC):
-    schema: PascalPydanticMixin = None
-    response_schema: PascalPydanticMixin = None
+    _SCHEMA: PascalPydanticMixin = None
 
     @abstractmethod
-    async def execute(self, payload: PascalPydanticMixin, user_id: int = None):
+    async def handle(cls, event: RequestEvent) -> ResponseEvent:
         raise NotImplementedError
+
+    @classmethod
+    def parse_event(cls, event: Event) -> PascalPydanticMixin:
+        try:
+            return event.payload_as(cls._SCHEMA)
+        except ValidationError as exc:
+            raise MissingEventInformationException(parameters=exc.to_dict())
