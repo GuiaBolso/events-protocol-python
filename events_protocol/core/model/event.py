@@ -2,22 +2,24 @@ from abc import ABC
 from typing import Any, Dict, Generic, Optional, Union
 from uuid import UUID, uuid4
 
-from .base import PascalPydanticMixin
-from .event_error_type import EventErrorType
+from .base import PascalPydanticMixin, ValidationError
+from .event_type import EventErrorType, EventSuccessType, EventType
+
+PayloadType = Dict[str, Any]
 
 
 class Event(PascalPydanticMixin):
     name: str
     version: int
-    payload: Dict[str, Any]
+    payload: PayloadType = dict()
     id: Optional[str] = str(uuid4())
     flow_id: Optional[str] = str(uuid4())
-    identity: Optional[Dict[str, Any]] = dict
-    auth: Optional[Dict[str, Any]] = dict
-    metadata: Optional[Dict[str, Any]] = dict
+    identity: Optional[Dict[str, Any]] = dict()
+    auth: Optional[Dict[str, Any]] = dict()
+    metadata: Optional[Dict[str, Any]] = dict()
 
-    def payload_as(self, clazz: Generic) -> Generic:
-        return clazz.from_dict(self.payload)
+    def payload_as(self, clazz: PascalPydanticMixin) -> PascalPydanticMixin:
+        return clazz(**self.payload)
 
     def identity_as(self, clazz: Generic) -> Generic:
         return clazz.from_dict(self.identity)
@@ -37,23 +39,38 @@ class Event(PascalPydanticMixin):
 
 
 class ResponseEvent(Event):
+    @staticmethod
+    def from_event(
+        event: Event, event_type: EventType = EventSuccessType.SUCCESS
+    ) -> "ResponseEvent":
+        response_event = ResponseEvent.from_object(event)
+        response_event.name = f"{response_event.name}:{event_type}"
+        return response_event
+
     @property
     def is_success(self) -> bool:
-        return self.name.endswith(":response")
+        return self.event_type == EventSuccessType.SUCCESS
 
     @property
     def is_redirect(self) -> bool:
-        return self.name.endswith(":redirect")
+        return self.event_type == EventSuccessType.REDIRECT
 
     @property
     def is_error(self) -> bool:
-        return not self.is_success and not self.is_redirect
+        return EventErrorType.is_in(self.event_type)
+
+    @property
+    def _event(self) -> str:
+        return self.name.split(":")[-1]
+
+    @property
+    def event_type(self) -> EventType:
+        return EventSuccessType.get_type(self._event) or EventErrorType.get_type(self._event)
 
     @property
     def error_type(self) -> EventErrorType:
         if self.is_error:
-            error = self.name.split(":")[-1]
-            return EventErrorType.get_error_type(error)
+            return EventErrorType.get_type(self._event)
         raise ValueError("This is not an error event.")
 
 
