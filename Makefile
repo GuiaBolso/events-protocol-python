@@ -2,9 +2,10 @@ ifndef VERBOSE
 MAKEFLAGS += --no-print-directory -s
 endif
 
-refactory: ## Run autoflake
+refactory: ## Remove unused imports and variables/Format using black
 	@echo "---- Refactorying ----"
 	@autoflake --remove-all-unused-imports --remove-duplicate-keys --remove-unused-variables --in-place --exclude globs -r *
+	@black *
 
 .PHONY: clean
 clean: ## Delete All pyc and pycache files

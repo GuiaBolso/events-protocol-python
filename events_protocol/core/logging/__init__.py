@@ -2,10 +2,9 @@ import json
 import logging
 import queue
 import sys
-import typing
 from logging.handlers import QueueHandler, QueueListener
 
-from events_protocol.core.context import EventContextHolder, EventContext
+from events_protocol.core.context import EventContextHolder
 
 logging.basicConfig(level=logging.INFO, format="%(message)s")
 _q = queue.Queue(-1)

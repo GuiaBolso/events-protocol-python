@@ -1,4 +1,3 @@
-from logging import LoggerAdapter
 
 from events_protocol.core.logging import JsonLogger
 

@@ -12,8 +12,7 @@ class EventRegister(ABC):
     event_version: typing.Union[None, int]
     event_handler: EventHandler
 
-
     def __init_subclass__(cls):
         """Register event when every child class is instantiated from this interface class
-        """        
+        """
         EventDiscovery.add(cls.event_name, cls.event_handler, cls.event_version or 1)

@@ -4,7 +4,6 @@ from setuptools import setup, find_packages
 import events_protocol
 
 
-
 with open(join(dirname(__file__), "README.md")) as _file:
     long_description = _file.read()
 
@@ -19,10 +18,7 @@ setup(
     url="https://github.com/GuiaBolso/events-protocol-python",
     license="Apache-2.0",
     packages=find_packages(),
-    install_requires=[
-        "pydantic==1.3",
-        "requests==2.22.0"
-    ],
+    install_requires=["pydantic==1.3", "requests==2.22.0"],
     classifiers=[
         "Intended Audience :: Developers",
         "License :: OSI Approved :: Apache Software License",
