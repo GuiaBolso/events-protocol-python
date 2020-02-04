@@ -14,10 +14,15 @@ clean: ## Delete All pyc and pycache files
 
 .PHONY: test
 test: ## Run tests
-	@python3 -m unittest discover
+	@python3 -m unittest discover -v
+
+.PHONY: filter_test
+filter_test: ## PATTERN=<any_pattern> Run tests with filtering
+	@echo Running test w pattern ${PATTERN}
+	@python3 -m unittest -k ${PATTERN} -v
 
 coverage: ## Run tests opening html coverage
-	@coverage html --include=events_protocol/*
+	@coverage html -i --include=events_protocol/*
 	@firefox htmlcov/index.html
 
 dev: ## Install dev needed packages
