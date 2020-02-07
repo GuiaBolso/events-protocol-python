@@ -4,7 +4,7 @@ from unittest import TestCase
 
 from events_protocol.core.exception import EventException, MissingEventInformationException
 from events_protocol.core.model.base import PascalPydanticMixin
-from events_protocol.core.model.event import Event, ValidationError, ResponseEvent, RequestEvent
+from events_protocol.core.model.event import Event, RequestEvent, ResponseEvent, ValidationError
 
 
 class EventHandler(ABC):

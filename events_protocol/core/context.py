@@ -11,7 +11,8 @@ IdType = typing.Union[str, UUID]
 class EventContext(BaseModel):
     id: typing.Optional[IdType]
     flow_id: typing.Optional[IdType]
-    name: typing.Optional[str]
+    operation: typing.Optional[str]
+    user_id: typing.Optional[str]
 
 
 _context: ContextVar[EventContext] = ContextVar("event_context", default=None)
@@ -32,9 +33,11 @@ class EventContextHolder:
 
     @classmethod
     @asynccontextmanager
-    async def with_context(cls, context_id: IdType, context_flow_id: IdType, event_name: str):
+    async def with_context(cls, context_id: IdType, context_flow_id: IdType, event_name: str, user_id:str=None):
         try:
-            event_context = EventContext(id=context_id, flow_id=context_flow_id, name=event_name)
+            event_context = EventContext(
+                id=context_id, flow_id=context_flow_id, operation=event_name, user_id=user_id
+            )
             cls.set(event_context)
             yield cls.get()
         finally:
