@@ -67,7 +67,7 @@ class TestEventProcessor(TestCase):
     @supress_log
     @make_sync
     async def test_process_event_founding_fake_event(self):
-
+        FakeRegister.register()
         test_event = Event(
             name=FakeRegister.event_name,
             version=FakeRegister.event_version,

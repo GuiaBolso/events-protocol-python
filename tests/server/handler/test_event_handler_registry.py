@@ -16,6 +16,6 @@ class TestEventRegister(TestCase):
             event_name = "event:top:zera"
             event_version = 1
             event_handler = _TestEventHandler
-
+        EventTester.register()
         event = EventDiscovery.get(EventTester.event_name, EventTester.event_version)
         self.assertEqual(event, _TestEventHandler)
