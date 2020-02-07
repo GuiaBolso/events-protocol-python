@@ -39,4 +39,5 @@ class JsonLogger(logging.LoggerAdapter):
                 _msg["stacktrace"] = exc
 
                 kwargs["exc_info"] = False
+            msg = json.dumps(_msg)
             self.logger.log(level, msg, *args, **kwargs)
