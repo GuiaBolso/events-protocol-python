@@ -33,7 +33,9 @@ class EventContextHolder:
 
     @classmethod
     @asynccontextmanager
-    async def with_context(cls, context_id: IdType, context_flow_id: IdType, event_name: str, user_id:str=None):
+    async def with_context(
+        cls, context_id: IdType, context_flow_id: IdType, event_name: str, user_id: str = None
+    ):
         try:
             event_context = EventContext(
                 id=context_id, flow_id=context_flow_id, operation=event_name, user_id=user_id
