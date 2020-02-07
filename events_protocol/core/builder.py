@@ -34,7 +34,7 @@ class EventBuilder(LoggableMixin):
             cls.logger.error("Event finished with error", extra=response_event.json())
         return response_event
 
-    @staticmethod
+    @classmethod
     def response_for(
         cls,
         event: Event,
@@ -45,5 +45,6 @@ class EventBuilder(LoggableMixin):
         response_event = ResponseEvent.from_object(event)
         response_event.name = f"{response_event.name}:{event_type}"
         response_event.payload = payload
-        cls.logger.info("Event finisjed with success", extra=response_event.json())
+        if loggable:
+            cls.logger.info("Event finished with success", extra=response_event.json())
         return response_event
