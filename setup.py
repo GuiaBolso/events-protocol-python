@@ -36,7 +36,7 @@ setup(
     ],
     classifiers=[
         "Intended Audience :: Developers",
-        "License :: OSI Approved :: Apache-2.0 License",
+        "License :: OSI Approved :: Apache Software License",
         "Operating System :: Unix",
         "Operating System :: POSIX :: Linux",
         "Operating System :: MacOS",
