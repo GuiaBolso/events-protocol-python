@@ -10,7 +10,7 @@ from events_protocol.core.exception import (
 from events_protocol.core.logging.mixins.loggable import LoggableMixin
 from events_protocol.core.model.base import ValidationError
 from events_protocol.core.model.event import Event, ResponseEvent
-from events_protocol.server.handler.event_handler import EventHandler
+from events_protocol.server.handler.event_handler import EventHandler, AsyncEventHandler
 from events_protocol.server.handler.event_handler_discovery import EventDiscovery
 
 from events_protocol.core.builder import EventBuilder
@@ -21,13 +21,13 @@ class EventProcessor(LoggableMixin):
     event_validator = Event
 
     @classmethod
-    async def process_event(cls, raw_event: str) -> str:
+    def process_event(cls, raw_event: str) -> str:
         event = None
         try:
             event: Event = cls.parse_event(raw_event)
-            async with EventContextHolder.with_context(event.id, event.flow_id, event.name) as _:
+            with EventContextHolder.with_context(event.id, event.flow_id, event.name) as _:
                 event_handler: EventHandler = EventDiscovery.get(event.name, event.version)
-                response: ResponseEvent = await event_handler.handle(event)
+                response: ResponseEvent = event_handler.handle(event)
                 return response.to_json()
         except EventException as exception:
             return EventBuilder.error_for(exception, event).to_json()
@@ -52,3 +52,19 @@ class EventProcessor(LoggableMixin):
                 extra=dict(event=json.dumps(str_event)),
             )
             raise EventParsingException(dict(error="Unknown error"))
+
+
+class AsyncEventProcessor(EventProcessor):
+    @classmethod
+    async def process_event(cls, raw_event: str) -> str:
+        event = None
+        try:
+            event: Event = cls.parse_event(raw_event)
+            async with EventContextHolder.with_async_context(
+                event.id, event.flow_id, event.name
+            ) as _:
+                event_handler: AsyncEventHandler = EventDiscovery.get(event.name, event.version)
+                response: ResponseEvent = await event_handler.handle(event)
+                return response.to_json()
+        except EventException as exception:
+            return EventBuilder.error_for(exception, event).to_json()

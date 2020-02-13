@@ -10,7 +10,7 @@ class EventHandler(ABC):
     _SCHEMA: CamelPydanticMixin = None
 
     @abstractmethod
-    async def handle(cls, event: RequestEvent) -> ResponseEvent:
+    def handle(cls, event: RequestEvent) -> ResponseEvent:
         raise NotImplementedError
 
     @classmethod
@@ -19,3 +19,11 @@ class EventHandler(ABC):
             return event.payload_as(cls._SCHEMA)
         except ValidationError as exception:
             raise MissingEventInformationException(parameters=exception.to_dict())
+
+
+class AsyncEventHandler(EventHandler, ABC):
+    _SCHEMA: CamelPydanticMixin = None
+
+    @abstractmethod
+    async def handle(cls, event: RequestEvent) -> ResponseEvent:
+        raise NotImplementedError

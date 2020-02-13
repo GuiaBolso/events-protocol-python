@@ -1,5 +1,5 @@
 import typing
-from contextlib import asynccontextmanager
+from contextlib import asynccontextmanager, contextmanager
 from contextvars import ContextVar
 from uuid import UUID
 
@@ -31,8 +31,22 @@ class EventContextHolder:
         _context.set(None)
 
     @classmethod
+    @contextmanager
+    def with_context(
+        cls, context_id: IdType, context_flow_id: IdType, event_name: str, user_id: str = None
+    ):
+        try:
+            event_context = EventContext(
+                id=context_id, flow_id=context_flow_id, event_name=event_name, user_id=user_id
+            )
+            cls.set(event_context)
+            yield cls.get()
+        finally:
+            cls.clean()
+
+    @classmethod
     @asynccontextmanager
-    async def with_context(
+    async def with_async_context(
         cls, context_id: IdType, context_flow_id: IdType, event_name: str, user_id: str = None
     ):
         try:

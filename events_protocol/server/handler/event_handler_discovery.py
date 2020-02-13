@@ -3,11 +3,13 @@ import typing
 
 from events_protocol.core.exception import EventException, EventNotFoundException
 from events_protocol.core.logging.mixins.loggable import LoggableMixin
-from events_protocol.server.handler.event_handler import EventHandler
+from events_protocol.server.handler.event_handler import EventHandler, AsyncEventHandler
 
 
 class EventDiscovery(LoggableMixin):
-    _events: typing.Dict[typing.Tuple[str, int], EventHandler] = dict()
+    _events: typing.Dict[
+        typing.Tuple[str, int], typing.Union[EventHandler, AsyncEventHandler]
+    ] = dict()
     _EVENT_NAME_STD: str = r"[a-z_]+[a-z]:[a-z_]+[a-z]:[a-z_]+[a-z](:[a-z]+[a-z])*"
 
     @classmethod
