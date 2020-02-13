@@ -2,13 +2,13 @@ from abc import ABC
 from typing import Any, Dict, Generic, Optional, Union
 from uuid import UUID, uuid4
 
-from .base import PascalPydanticMixin, ValidationError
+from .base import CamelPydanticMixin, ValidationError
 from .event_type import EventErrorType, EventSuccessType, EventType
 
 PayloadType = Dict[str, Any]
 
 
-class Event(PascalPydanticMixin):
+class Event(CamelPydanticMixin):
     name: str
     version: int
     payload: PayloadType = dict()
@@ -18,7 +18,7 @@ class Event(PascalPydanticMixin):
     auth: Optional[Dict[str, Any]] = dict()
     metadata: Optional[Dict[str, Any]] = dict()
 
-    def payload_as(self, clazz: PascalPydanticMixin) -> PascalPydanticMixin:
+    def payload_as(self, clazz: CamelPydanticMixin) -> CamelPydanticMixin:
         return clazz(**self.payload)
 
     def identity_as(self, clazz: Generic) -> Generic:
@@ -78,6 +78,6 @@ class RequestEvent(Event):
     pass
 
 
-class EventMessage(PascalPydanticMixin):
+class EventMessage(CamelPydanticMixin):
     code: str
     parameters: Dict[str, Optional[Any]]

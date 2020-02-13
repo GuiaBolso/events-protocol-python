@@ -7,7 +7,7 @@ from pydantic import ValidationError as PydanticValidationError
 from pydantic import validate_model
 
 
-def _to_pascal(string: str) -> str:
+def _to_camel(string: str) -> str:
     result = string.split("_")
     result[1:] = [word.capitalize() for word in result[1:]]
     return "".join(result)
@@ -69,9 +69,9 @@ class BaseModel(PydanticBaseModel):
         return self.json(by_alias=True)
 
 
-class PascalPydanticMixin(BaseModel):
+class CamelPydanticMixin(BaseModel):
     class Config:
-        alias_generator = _to_pascal
+        alias_generator = _to_camel
 
     def __init__(self, by_alias=True, **data: typing.Any) -> None:
         _data = dict()
@@ -82,7 +82,7 @@ class PascalPydanticMixin(BaseModel):
         super().__init__(**_data)
 
     @classmethod
-    def from_json(cls, data: str) -> "PascalPydanticMixin":
+    def from_json(cls, data: str) -> "CamelPydanticMixin":
         try:
             _data = json.loads(data)
         except json.decoder.JSONDecodeError as exc:

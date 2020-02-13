@@ -4,7 +4,7 @@ from uuid import uuid4
 
 from events_protocol.core.exception import EventParsingException
 from events_protocol.core.logging.supressor import supress_log
-from events_protocol.core.model.event import Event, PascalPydanticMixin, ResponseEvent
+from events_protocol.core.model.event import Event, CamelPydanticMixin, ResponseEvent
 from events_protocol.core.model.event_type import EventErrorType
 from events_protocol.core.utils.sync import make_sync
 from events_protocol.server.handler.event_handler import EventHandler
@@ -12,7 +12,7 @@ from events_protocol.server.handler.event_handler_registry import EventRegister
 from events_protocol.server.parser.event_processor import EventProcessor
 
 
-class FakeSchema(PascalPydanticMixin):
+class FakeSchema(CamelPydanticMixin):
     field: str
 
 

@@ -4,7 +4,7 @@ from unittest import TestCase
 
 from .event_handler_discovery import EventDiscovery
 from .event_handler import EventHandler
-from events_protocol.core.model.base import PascalPydanticMixin
+from events_protocol.core.model.base import CamelPydanticMixin
 
 
 class EventRegister(ABC):
