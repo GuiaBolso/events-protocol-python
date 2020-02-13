@@ -94,7 +94,7 @@ event_input = Event(
     identity={"userId": "USER_ID",},
     metadata={"date": "00-00-0000",},
 )
-input_body_ = event_input.to_json()
+input_body = event_input.to_json()
 
 ## Apos todos eventos registrados, registre uma rota "/events" no seu framework web de preferência e processe o body utilizando o seguinte comando
 response = EventProcessor.process_event(input_body)
