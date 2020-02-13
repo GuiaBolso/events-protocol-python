@@ -9,7 +9,7 @@ from events_protocol.core.model.event_type import EventErrorType
 from tests.utils.sync import make_sync
 from events_protocol.server.handler.event_handler import EventHandler
 from events_protocol.server.handler.event_handler_registry import EventRegister
-from events_protocol.server.parser.event_processor import EventProcessor
+from events_protocol.server.parser.event_processor import AsyncEventProcessor
 
 
 class FakeSchema(CamelPydanticMixin):
@@ -30,18 +30,18 @@ class FakeRegister(EventRegister):
     event_handler = FakeHandler
 
 
-class TestEventProcessor(TestCase):
+class TestAsyncEventProcessor(TestCase):
     @supress_log
     def test_parse_event_with_event_validation_error(self):
         test_json = json.dumps({"awesome": "test"})
-        event_processor = EventProcessor()
+        event_processor = AsyncEventProcessor()
         with self.assertRaises(EventParsingException):
             event_processor.parse_event(test_json)
 
     @supress_log
     def test_parse_event_with_event_parsing_error(self):
         test_json = r"{{wrong_json}"
-        event_processor = EventProcessor()
+        event_processor = AsyncEventProcessor()
         with self.assertRaises(EventParsingException):
             event_processor.parse_event(test_json)
 
@@ -49,7 +49,7 @@ class TestEventProcessor(TestCase):
     def test_parse_event_with_valid_event(self):
         test_event = Event(name="event:test", version="2", id=str(uuid4()), flow_id=str(uuid4()))
         test_json = test_event.to_json()
-        event_processor = EventProcessor()
+        event_processor = AsyncEventProcessor()
         event = event_processor.parse_event(test_json)
         self.assertEqual(event, test_event)
 
@@ -58,7 +58,7 @@ class TestEventProcessor(TestCase):
     async def test_process_event_founding_none_event(self):
         test_event = Event(name="event:test", version="2", id=str(uuid4()), flow_id=str(uuid4()))
         test_json = test_event.to_json()
-        event_processor = EventProcessor()
+        event_processor = AsyncEventProcessor()
         event = await event_processor.process_event(test_json)
         response: ResponseEvent = ResponseEvent.from_json(event)
         self.assertTrue(response.is_error)
@@ -76,6 +76,6 @@ class TestEventProcessor(TestCase):
             payload={},
         )
         test_json = test_event.to_json()
-        event_processor = EventProcessor()
+        event_processor = AsyncEventProcessor()
         response = await event_processor.process_event(test_json)
         self.assertEqual(test_json, response)
