@@ -13,7 +13,7 @@ _handler = logging.NullHandler()
 _queue_listener = QueueListener(_queue, _handler)
 
 _logger = logging.getLogger("gb.application")
-_logger.addHandler(_queue_listener)
+_logger.addHandler(_queue_handler)
 _queue_listener.start()
 
 
