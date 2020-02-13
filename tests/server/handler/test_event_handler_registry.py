@@ -17,6 +17,6 @@ class TestEventRegister(TestCase):
             event_version = 1
             event_handler = _TestEventHandler
 
-        EventTester.register()
+        EventTester.register_event()
         event = EventDiscovery.get(EventTester.event_name, EventTester.event_version)
         self.assertEqual(event, _TestEventHandler)
