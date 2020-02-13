@@ -46,7 +46,7 @@ class EventClient:
     def parse_event(self, raw_response: str) -> ResponseEvent:
         try:
             return ResponseEvent.from_json(raw_response)
-        except (KeyError, ValidationError) as e:
+        except ValidationError:
             raise BadProtocolException("Error on parsing event response")
 
     def build_request_event(

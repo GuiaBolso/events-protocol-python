@@ -1,6 +1,5 @@
 import re
 import typing
-from unittest import TestCase
 
 from events_protocol.core.exception import EventException, EventNotFoundException
 from events_protocol.core.logging.mixins.loggable import LoggableMixin

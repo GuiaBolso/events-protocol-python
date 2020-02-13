@@ -2,26 +2,14 @@ import typing
 from enum import Enum, unique
 
 
-from events_protocol.core.utils.class_property import ClassProperty
-
-
-def iter_enum(input_enum: typing.List[Enum]) -> typing.Any:
-    for item in input_enum:
-        if isinstance(item, Enum):
-            yield item.value
-        else:
-            yield item
-
-
 class EventType(Enum):
-    def all(cls):
-        return iter_enum(cls)
-
     @classmethod
-    def is_in(cls, item: typing.Any):
-        if isinstance(item, Enum):
-            item = item.value
-        return item in iter_enum(cls)
+    def is_in(cls, item: typing.Any) -> bool:
+        try:
+            cls(item)
+            return True
+        except ValueError:
+            return False
 
     def __str__(self) -> str:
         return str(self.value)

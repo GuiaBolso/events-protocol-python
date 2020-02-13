@@ -9,7 +9,7 @@ from events_protocol.core.model.event import (
     PayloadType,
     ResponseEvent,
 )
-from events_protocol.core.model.event_type import EventErrorType, EventSuccessType
+from events_protocol.core.model.event_type import EventSuccessType
 from events_protocol.core.logging.mixins.loggable import LoggableMixin
 
 
@@ -17,16 +17,18 @@ class EventBuilder(LoggableMixin):
     @classmethod
     def error_for(
         cls,
-        exc: typing.Union[EventException],
+        exception: typing.Union[EventException],
         event: typing.Optional[Event] = Event(name="", version=1, id=str(uuid4())),
         id_flow=str(uuid4()),
         loggable=True,
     ) -> ResponseEvent:
         event_name = (
-            f"{event.name}:{exc.event_error_type}" if event.name else f"{exc.event_error_type}"
+            f"{event.name}:{exception.event_error_type}"
+            if event.name
+            else f"{exception.event_error_type}"
         )
 
-        event_message = EventMessage(code=exc.code, parameters=exc.parameters).to_dict()
+        event_message = EventMessage(code=exception.code, parameters=exception.parameters).to_dict()
         response_event = ResponseEvent.from_object(event)
         response_event.name = event_name
         response_event.payload = event_message

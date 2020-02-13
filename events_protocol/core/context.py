@@ -11,8 +11,7 @@ IdType = typing.Union[str, UUID]
 class EventContext(BaseModel):
     id: typing.Optional[IdType]
     flow_id: typing.Optional[IdType]
-    operation: typing.Optional[str]
-    user_id: typing.Optional[str]
+    event_name: typing.Optional[str]
 
 
 _context: ContextVar[EventContext] = ContextVar("event_context", default=None)

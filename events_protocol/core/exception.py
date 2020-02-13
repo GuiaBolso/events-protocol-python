@@ -1,7 +1,6 @@
 from typing import Any, Dict, Optional, Union
 
 from .model.event_type import EventErrorType
-from .model.event_code import EventCode
 
 
 class EventException(RuntimeError):

@@ -60,17 +60,19 @@ class ResponseEvent(Event):
         return EventErrorType.is_in(self.event_type)
 
     @property
-    def _event(self) -> str:
+    def _event_name(self) -> str:
         return self.name.split(":")[-1]
 
     @property
     def event_type(self) -> EventType:
-        return EventSuccessType.get_type(self._event) or EventErrorType.get_type(self._event)
+        return EventSuccessType.get_type(self._event_name) or EventErrorType.get_type(
+            self._event_name
+        )
 
     @property
     def error_type(self) -> EventErrorType:
         if self.is_error:
-            return EventErrorType.get_type(self._event)
+            return EventErrorType.get_type(self._event_name)
         raise ValueError("This is not an error event.")
 
 

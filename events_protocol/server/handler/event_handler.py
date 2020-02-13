@@ -1,6 +1,5 @@
 import typing
 from abc import ABC, abstractmethod
-from unittest import TestCase
 
 from events_protocol.core.exception import EventException, MissingEventInformationException
 from events_protocol.core.model.base import CamelPydanticMixin
@@ -18,5 +17,5 @@ class EventHandler(ABC):
     def parse_event(cls, event: Event) -> CamelPydanticMixin:
         try:
             return event.payload_as(cls._SCHEMA)
-        except ValidationError as exc:
-            raise MissingEventInformationException(parameters=exc.to_dict())
+        except ValidationError as exception:
+            raise MissingEventInformationException(parameters=exception.to_dict())

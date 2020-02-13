@@ -7,14 +7,14 @@ from logging.handlers import QueueHandler, QueueListener
 from events_protocol.core.context import EventContextHolder
 
 logging.basicConfig(level=logging.INFO, format="%(message)s")
-_q = queue.Queue(-1)
-_qh = QueueHandler(_q)
-_h = logging.NullHandler()
-_ql = QueueListener(_q, _h)
+_queue = queue.Queue(-1)
+_queue_handler = QueueHandler(_queue)
+_handler = logging.NullHandler()
+_queue_listener = QueueListener(_queue, _handler)
 
 _logger = logging.getLogger("gb.application")
-_logger.addHandler(_qh)
-_ql.start()
+_logger.addHandler(_queue_listener)
+_queue_listener.start()
 
 
 class JsonLogger(logging.LoggerAdapter):

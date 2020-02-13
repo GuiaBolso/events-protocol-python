@@ -13,7 +13,7 @@ class EventRegister(ABC):
     event_handler: EventHandler
 
     @classmethod
-    def register(cls):
+    def register_event(cls):
         """Call this method on startup application
         """
         EventDiscovery.add(cls.event_name, cls.event_handler, cls.event_version or 1)

@@ -85,6 +85,8 @@ class CamelPydanticMixin(BaseModel):
     def from_json(cls, data: str) -> "CamelPydanticMixin":
         try:
             _data = json.loads(data)
-        except json.decoder.JSONDecodeError as exc:
-            raise ValidationError(fields=[Field(name="json", error_type=exc.msg, message=str(exc))])
+        except json.decoder.JSONDecodeError as exception:
+            raise ValidationError(
+                fields=[Field(name="json", error_type=exception.msg, message=str(exc))]
+            )
         return cls(**_data)
