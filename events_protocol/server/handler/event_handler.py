@@ -1,9 +1,9 @@
-import typing
 from abc import ABC, abstractmethod
 
-from events_protocol.core.exception import EventException, MissingEventInformationException
+from events_protocol.core.exception import MissingEventInformationException
 from events_protocol.core.model.base import CamelPydanticMixin
-from events_protocol.core.model.event import Event, RequestEvent, ResponseEvent, ValidationError
+from events_protocol.core.model.event import Event, RequestEvent, ResponseEvent
+from events_protocol.core.model.base import ValidationError
 
 
 class EventHandler(ABC):

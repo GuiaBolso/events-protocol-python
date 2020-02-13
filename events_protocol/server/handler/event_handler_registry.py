@@ -1,10 +1,8 @@
 import typing
-from abc import ABC, abstractmethod
-from unittest import TestCase
+from abc import ABC
 
 from .event_handler_discovery import EventDiscovery
 from .event_handler import EventHandler
-from events_protocol.core.model.base import CamelPydanticMixin
 
 
 class EventRegister(ABC):

@@ -1,7 +1,7 @@
 import re
 import typing
 
-from events_protocol.core.exception import EventException, EventNotFoundException
+from events_protocol.core.exception import EventNotFoundException
 from events_protocol.core.logging.mixins.loggable import LoggableMixin
 from events_protocol.server.handler.event_handler import EventHandler, AsyncEventHandler
 

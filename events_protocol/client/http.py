@@ -1,6 +1,6 @@
 import requests
 
-from typing import Dict, Any
+from typing import Dict
 
 from requests.exceptions import Timeout, ReadTimeout, ConnectTimeout
 

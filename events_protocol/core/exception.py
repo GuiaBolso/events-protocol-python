@@ -1,7 +1,19 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional
 
 from .model.event_type import EventErrorType
 
+@dataclass
+class ValidationError(Exception):
+    fields: typing.List[Field]
+
+    def to_dict(self) -> typing.Dict[str, typing.Any]:
+        _fields = list()
+        for item in self.fields:
+            _fields.append(item.to_dict())
+        return dict(fields=_fields)
+
+    def to_json(self):
+        return json.dumps(self.to_dict())
 
 class EventException(RuntimeError):
     _CODE: str = ""

@@ -1,8 +1,7 @@
 import typing
 from uuid import uuid4
 
-from events_protocol.core.exception import EventException, EventNotFoundException
-from events_protocol.core.logging import JsonLogger
+from events_protocol.core.exception import EventException
 from events_protocol.core.model.event import (
     Event,
     EventMessage,

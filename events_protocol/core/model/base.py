@@ -3,7 +3,6 @@ import typing
 from dataclasses import dataclass
 
 from pydantic import BaseModel as PydanticBaseModel
-from pydantic import ValidationError as PydanticValidationError
 from pydantic import validate_model
 
 
@@ -40,7 +39,7 @@ class ValidationError(Exception):
 class BaseModel(PydanticBaseModel):
     def __init__(__pydantic_self__, **data):
         if typing.TYPE_CHECKING:
-            __pydantic_self__.__dict__: Dict[str, Any] = {}
+            __pydantic_self__.__dict__: typing.Dict[str, typing.Any] = {}
             __pydantic_self__.__fields_set__: "SetStr" = set()
         values, fields_set, validation_error = validate_model(__pydantic_self__.__class__, data)
         if validation_error:
@@ -87,6 +86,6 @@ class CamelPydanticMixin(BaseModel):
             _data = json.loads(data)
         except json.decoder.JSONDecodeError as exception:
             raise ValidationError(
-                fields=[Field(name="json", error_type=exception.msg, message=str(exc))]
+                fields=[Field(name="json", error_type=exception.msg, message=str(exception))]
             )
         return cls(**_data)

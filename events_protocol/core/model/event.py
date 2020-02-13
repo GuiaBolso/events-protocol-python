@@ -1,8 +1,7 @@
-from abc import ABC
-from typing import Any, Dict, Generic, Optional, Union
-from uuid import UUID, uuid4
+from typing import Any, Dict, Generic, Optional
+from uuid import uuid4
 
-from .base import CamelPydanticMixin, ValidationError
+from .base import CamelPydanticMixin
 from .event_type import EventErrorType, EventSuccessType, EventType
 
 PayloadType = Dict[str, Any]

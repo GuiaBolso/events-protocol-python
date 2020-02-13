@@ -1,11 +1,9 @@
 import json
-import typing
 
 from events_protocol.core.context import EventContextHolder
 from events_protocol.core.exception import (
     EventException,
     EventParsingException,
-    EventNotFoundException,
 )
 from events_protocol.core.logging.mixins.loggable import LoggableMixin
 from events_protocol.core.model.base import ValidationError

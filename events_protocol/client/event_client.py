@@ -1,5 +1,4 @@
-import json
-from typing import Dict, Optional, Union
+from typing import Dict, Optional
 from uuid import uuid4
 
 from ..core.context import EventContextHolder
