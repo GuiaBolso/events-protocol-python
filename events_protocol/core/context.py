@@ -37,7 +37,7 @@ class EventContextHolder:
     ):
         try:
             event_context = EventContext(
-                id=context_id, flow_id=context_flow_id, operation=event_name, user_id=user_id
+                id=context_id, flow_id=context_flow_id, event_name=event_name, user_id=user_id
             )
             cls.set(event_context)
             yield cls.get()
