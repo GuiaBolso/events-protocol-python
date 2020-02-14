@@ -1,10 +1,11 @@
+from typing import Dict, Optional
 from uuid import uuid4
-from typing import Optional, Dict
 
-from .http import HttpClient
-from .exception.request_exception import BadProtocolException
+from ..core.context import EventContextHolder
+from ..core.model.base import ValidationError
 from ..core.model.event import RequestEvent, ResponseEvent
-from ..core.context import _context
+from .exception.request_exception import BadProtocolException
+from .http import HttpClient
 
 
 class EventClient:
@@ -44,7 +45,7 @@ class EventClient:
     def parse_event(self, raw_response: str) -> ResponseEvent:
         try:
             return ResponseEvent.from_json(raw_response)
-        except KeyError as e:
+        except ValidationError:
             raise BadProtocolException("Error on parsing event response")
 
     def build_request_event(
@@ -58,15 +59,13 @@ class EventClient:
         auth: Dict = {},
         metadata: Dict = {},
     ) -> RequestEvent:
-        context_id = getattr(_context.get(), "id", None)
-        context_flow_id = getattr(_context.get(), "flow_id", None)
-
+        context = EventContextHolder.get()
         return RequestEvent(
             name=name,
             version=version,
             payload=payload,
-            id=context_id or id or str(uuid4()),
-            flow_id=context_flow_id or flow_id or str(uuid4()),
+            id=context.id or id or str(uuid4()),
+            flow_id=context.flow_id or flow_id or str(uuid4()),
             identity=identity,
             auth=auth,
             metadata=metadata,

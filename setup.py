@@ -1,9 +1,7 @@
 from os.path import dirname, join
 from setuptools import setup, find_packages
 
-
-with open(join(dirname(__file__), "events_protocol/VERSION")) as _file:
-    version = _file.read().strip()
+import events_protocol
 
 
 with open(join(dirname(__file__), "README.md")) as _file:
@@ -12,7 +10,7 @@ with open(join(dirname(__file__), "README.md")) as _file:
 
 setup(
     name="events-protocol",
-    version=version,
+    version=events_protocol.__version__,
     author="Guiabolso",
     description="Library to be a Client and Server using event protocol",
     long_description=long_description,
@@ -25,9 +23,10 @@ setup(
         "chardet==3.0.4",
         "dataclasses-json==0.3.7",
         "idna==2.8",
-        "marshmallow==3.3.0",
+        "marshmallow==3.4.0",
         "marshmallow-enum==1.5.1",
         "mypy-extensions==0.4.3",
+        "pydantic==1.4",
         "requests==2.22.0",
         "stringcase==1.2.0",
         "typing-extensions==3.7.4.1",

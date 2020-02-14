@@ -1,12 +1,11 @@
 from unittest import TestCase
 from unittest.mock import patch
-from uuid import uuid4
 
-from events_protocol.core.model.event import RequestEvent, ResponseEvent
-from events_protocol.core.model.event_error_type import EventErrorType
-from events_protocol.core.context import _context, EventContext
 from events_protocol.client.event_client import EventClient
 from events_protocol.client.exception.request_exception import BadProtocolException
+from events_protocol.core.context import EventContext, EventContextHolder
+from events_protocol.core.model.event import ResponseEvent
+from events_protocol.core.model.event_type import EventErrorType
 
 
 class EventClientTest(TestCase):
@@ -43,7 +42,6 @@ class EventClientTest(TestCase):
 
         post_method.return_value = response_event.to_json()
         response = self.client.send_event(**event)
-
         self.assertTrue(response.is_error)
         self.assertEqual(EventErrorType.GENERIC, response.error_type)
         self.assertEqual(response, response_event)
@@ -59,7 +57,7 @@ class EventClientTest(TestCase):
         post_method.return_value = "{}"
 
         with self.assertRaises(BadProtocolException):
-            response = self.client.send_event(**event)
+            self.client.send_event(**event)
 
 
 class BuildEventTest(TestCase):
@@ -67,8 +65,8 @@ class BuildEventTest(TestCase):
         self.client = EventClient("http://test.com/events/")
 
     def test_build_event_with_context(self):
-        context = EventContext("my-id", "my-flow-id")
-        _context.set(context)
+        context = EventContext(id="my-id", flow_id="my-flow-id", name="test")
+        EventContextHolder.set(context)
 
         event = {
             "name": "event:name",
@@ -82,7 +80,7 @@ class BuildEventTest(TestCase):
         self.assertEqual(context.id, builded_event.id)
         self.assertEqual(context.flow_id, builded_event.flow_id)
 
-        _context.set(None)
+        EventContextHolder.clean()
 
     def test_build_event_without_context(self):
         event = {
