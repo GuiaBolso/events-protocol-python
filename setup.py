@@ -21,16 +21,9 @@ setup(
     install_requires=[
         "certifi==2019.11.28",
         "chardet==3.0.4",
-        "dataclasses-json==0.3.7",
         "idna==2.8",
-        "marshmallow==3.4.0",
-        "marshmallow-enum==1.5.1",
-        "mypy-extensions==0.4.3",
         "pydantic==1.4",
         "requests==2.22.0",
-        "stringcase==1.2.0",
-        "typing-extensions==3.7.4.1",
-        "typing-inspect==0.5.0",
         "urllib3==1.25.8",
     ],
     classifiers=[
