@@ -26,6 +26,12 @@ setup(
         "requests==2.22.0",
         "urllib3==1.25.8",
     ],
+    extras_require={
+        "doc": [
+            "Sphinx==2.4.1",
+            "sphinx-autoapi==1.2.1",
+        ],
+    },
     classifiers=[
         "Intended Audience :: Developers",
         "License :: OSI Approved :: Apache Software License",
