@@ -1,8 +1,11 @@
 <h1 align="center">events-protocol</h1>
 <p align="center">
+    <a href="https://badge.fury.io/py/events-protocol"><img alt="PyPI version" src="https://badge.fury.io/py/events-protocol.svg"></a>
+    <a href='https://events-protocol.readthedocs.io/en/latest/?badge=latest'><img src='https://readthedocs.org/projects/events-protocol/badge/?version=latest' alt='Documentation Status' /></a>
     <a href="https://github.com/GuiaBolso/events-protocol-python/actions"><img alt="Actions Status" src="https://github.com/GuiaBolso/events-protocol-python/workflows/Black%20Check%20and%20Tests/badge.svg?branch=master"></a>
     <a href="https://github.com/GuiaBolso/events-protocol-python/blob/master/LICENSE"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"></a>
     <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+    <a href="https://pypi.org/project/events-protocol/"><img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/events-protocol.svg"></a>
 </p>
 
 ### Como usar
