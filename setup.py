@@ -32,6 +32,10 @@ setup(
             "sphinx-autoapi==1.2.1",
         ],
     },
+    project_urls={
+        "Documentation": "https://events-protocol.readthedocs.io/en/stable/",
+        "Source Code": "https://github.com/GuiaBolso/events-protocol-python",
+    },
     classifiers=[
         "Intended Audience :: Developers",
         "License :: OSI Approved :: Apache Software License",
