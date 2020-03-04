@@ -26,12 +26,7 @@ setup(
         "requests==2.22.0",
         "urllib3==1.25.8",
     ],
-    extras_require={
-        "doc": [
-            "Sphinx==2.4.1",
-            "sphinx-autoapi==1.2.1",
-        ],
-    },
+    extras_require={"doc": ["Sphinx==2.4.1", "sphinx-autoapi==1.2.1",],},
     project_urls={
         "Documentation": "https://events-protocol.readthedocs.io/en/stable/",
         "Source Code": "https://github.com/GuiaBolso/events-protocol-python",
