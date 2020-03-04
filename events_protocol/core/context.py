@@ -12,6 +12,8 @@ class EventContext(BaseModel):
     id: typing.Optional[IdType]
     flow_id: typing.Optional[IdType]
     event_name: typing.Optional[str]
+    event_version: typing.Optional[int]
+    user_id: typing.Optional[str]
 
 
 _context: ContextVar[EventContext] = ContextVar("event_context", default=None)
@@ -33,11 +35,20 @@ class EventContextHolder:
     @classmethod
     @contextmanager
     def with_context(
-        cls, context_id: IdType, context_flow_id: IdType, event_name: str, user_id: str = None
+        cls,
+        context_id: IdType,
+        context_flow_id: IdType,
+        event_name: str,
+        event_version: int,
+        user_id: str = None,
     ):
         try:
             event_context = EventContext(
-                id=context_id, flow_id=context_flow_id, event_name=event_name, user_id=user_id
+                id=context_id,
+                flow_id=context_flow_id,
+                event_name=event_name,
+                user_id=user_id,
+                event_version=event_version,
             )
             cls.set(event_context)
             yield cls.get()
@@ -47,11 +58,20 @@ class EventContextHolder:
     @classmethod
     @asynccontextmanager
     async def with_async_context(
-        cls, context_id: IdType, context_flow_id: IdType, event_name: str, user_id: str = None
+        cls,
+        context_id: IdType,
+        context_flow_id: IdType,
+        event_name: str,
+        event_version: int,
+        user_id: str = None,
     ):
         try:
             event_context = EventContext(
-                id=context_id, flow_id=context_flow_id, event_name=event_name, user_id=user_id
+                id=context_id,
+                flow_id=context_flow_id,
+                event_name=event_name,
+                user_id=user_id,
+                event_version=event_version,
             )
             cls.set(event_context)
             yield cls.get()

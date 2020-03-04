@@ -20,13 +20,13 @@ import events_protocol
 
 # -- Project information -----------------------------------------------------
 
-project = 'events-protocol'
-copyright = '2020, Guiabolso'
-author = 'Guiabolso'
+project = "events-protocol"
+copyright = "2020, Guiabolso"
+author = "Guiabolso"
 
 autodoc_mock_imports = [
-    'requests',
-    'pydantic',
+    "requests",
+    "pydantic",
 ]
 
 # -- General configuration ---------------------------------------------------
@@ -35,33 +35,30 @@ autodoc_mock_imports = [
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autodoc',
-    'autoapi.extension',
+    "sphinx.ext.autodoc",
+    "autoapi.extension",
 ]
 
-autodoc_default_options = {
-    'show-inheritance': True,
-    'members': True
-}
+autodoc_default_options = {"show-inheritance": True, "members": True}
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ["_templates"]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = [
-    'autoapi_templates',
+    "autoapi_templates",
 ]
 
 # Paths (relative or absolute) to the source code that you wish to generate
 # your API documentation from.
 autoapi_dirs = [
-    os.path.abspath('../../events_protocol'),
+    os.path.abspath("../../events_protocol"),
 ]
 
 # A directory that has user-defined templates to override our default templates.
-autoapi_template_dir = 'autoapi_templates'
+autoapi_template_dir = "autoapi_templates"
 
 # Keep the AutoAPI generated files on the filesystem after the run.
 # Useful for debugging.
@@ -69,7 +66,7 @@ autoapi_keep_files = True
 
 # Relative path to output the AutoAPI files into. This can also be used to place the generated documentation
 # anywhere in your documentation hierarchy.
-autoapi_root = '_api'
+autoapi_root = "_api"
 
 version = events_protocol.__version__
 release = events_protocol.__version__
@@ -79,15 +76,15 @@ release = events_protocol.__version__
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'default'
+html_theme = "default"
 
-html_title = 'Events Protocol'
+html_title = "Events Protocol"
 
-html_favicon = '_static/images/favicon.png'
+html_favicon = "_static/images/favicon.png"
 
-master_doc = 'index'
+master_doc = "index"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ["_static"]

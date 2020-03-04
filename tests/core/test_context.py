@@ -12,7 +12,7 @@ class TestEventContextHolder(TestCase):
     async def test_with_context(self):
         test_event = EventContext(id="my_id", flow_id="my_flow_id", name="test")
         async with EventContextHolder.with_async_context(
-            test_event.id, test_event.flow_id, test_event.event_name
+            test_event.id, test_event.flow_id, test_event.event_name, test_event.event_version
         ) as event_context:
             self.assertEqual(event_context, test_event)
             self.assertEqual(EventContextHolder.get(), test_event)
@@ -24,7 +24,10 @@ class TestEventContextHolder(TestCase):
         async def event_0():
             first_event = EventContext(id=uuid4(), flow_id=uuid4(), name="test")
             async with EventContextHolder.with_async_context(
-                first_event.id, first_event.flow_id, first_event.event_name
+                first_event.id,
+                first_event.flow_id,
+                first_event.event_name,
+                first_event.event_version,
             ) as event_context:
                 assert EventContextHolder.get() == event_context, "EventContext was wrongly set"
                 _events.append({0: EventContextHolder.get()})
@@ -33,7 +36,10 @@ class TestEventContextHolder(TestCase):
         async def event_1():
             second_event = EventContext(id=uuid4(), flow_id=uuid4(), name="test")
             async with EventContextHolder.with_async_context(
-                second_event.id, second_event.flow_id, second_event.event_name
+                second_event.id,
+                second_event.flow_id,
+                second_event.event_name,
+                second_event.event_version,
             ) as event_context:
                 assert EventContextHolder.get() == event_context, "EventContext was wrongly set"
                 _events.append({1: EventContextHolder.get()})
