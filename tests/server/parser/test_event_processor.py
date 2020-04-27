@@ -9,7 +9,7 @@ from events_protocol.core.model.event_type import EventErrorType
 from tests.utils.sync import make_sync
 from events_protocol.server.handler.event_handler import EventHandler
 from events_protocol.server.handler.event_handler_registry import EventRegister
-from events_protocol.server.parser.event_processor import AsyncEventProcessor
+from events_protocol.server.parser.event_processor import AsyncEventProcessor, EventProcessor
 
 
 class FakeSchema(CamelPydanticMixin):
@@ -79,3 +79,14 @@ class TestAsyncEventProcessor(TestCase):
         event_processor = AsyncEventProcessor()
         response = await event_processor.process_event(test_json)
         self.assertEqual(test_json, response)
+
+    @supress_log
+    @make_sync
+    def test_process_event_(self):
+        test_event = Event(name="event:test", version="1", id=str(uuid4()), flow_id=str(uuid4()))
+        test_json = test_event.to_json()
+        event_processor = EventProcessor()
+        event = event_processor.process_event(test_json)
+        response: ResponseEvent = ResponseEvent.from_json(event)
+        self.assertTrue(response.is_error)
+        self.assertEqual(response.event_type, EventErrorType.NOT_FOUND)

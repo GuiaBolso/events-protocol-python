@@ -23,7 +23,9 @@ class EventProcessor(LoggableMixin):
         event = None
         try:
             event: Event = cls.parse_event(raw_event)
-            with EventContextHolder.with_context(event.id, event.flow_id, event.name) as _:
+            with EventContextHolder.with_context(
+                event.id, event.flow_id, event.name, event.version
+            ) as _:
                 event_handler: EventHandler = EventDiscovery.get(event.name, event.version)
                 response: ResponseEvent = event_handler.handle(event)
                 return response.to_json()
