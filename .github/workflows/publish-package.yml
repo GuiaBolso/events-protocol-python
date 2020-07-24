@@ -21,7 +21,7 @@ jobs:
     - name: Install package dependencies
       run: pipenv --python 3.7 sync -d
     - name: Build
-      run: python setup.py sdist bdist_wheel
+      run: pipenv run python setup.py sdist bdist_wheel
     - name: Publish distribution 📦 to Test PyPI
       uses: pypa/gh-action-pypi-publish@master
       with:
