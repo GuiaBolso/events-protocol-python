@@ -19,7 +19,7 @@ jobs:
         pip install setuptools wheel twine
     - uses: dschep/install-pipenv-action@v1
     - name: Install package dependencies
-      run: pipenv --python ${{ matrix.python_version }} sync -d
+      run: pipenv --python 3.7 sync -d
     - name: Build
       run: python setup.py sdist bdist_wheel
     - name: Publish distribution 📦 to Test PyPI
