@@ -1,4 +1,4 @@
-__version__ = "0.1.4"  # pragma: no cover
+__version__ = "0.1.5"  # pragma: no cover
 
 from .core.builder import EventBuilder
 from .client import EventClient
