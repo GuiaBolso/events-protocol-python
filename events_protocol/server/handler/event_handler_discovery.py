@@ -10,7 +10,7 @@ class EventDiscovery(LoggableMixin):
     _events: typing.Dict[
         typing.Tuple[str, int], typing.Union[EventHandler, AsyncEventHandler]
     ] = dict()
-    _EVENT_NAME_STD: str = r"[a-z_]+[a-z]:[a-z_]+[a-z]:[a-z_]+[a-z](:[a-z]+[a-z])*"
+    _EVENT_NAME_STD: str = r"[a-z_]+[a-z]:[a-z_]+[a-z](:[a-z]+[a-z])*"
 
     @classmethod
     def add(cls, event_name: str, event_handler: EventHandler, version: int = 1) -> None:
