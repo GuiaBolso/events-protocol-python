@@ -22,7 +22,7 @@ setup(
         "certifi==2019.11.28",
         "chardet==3.0.4",
         "idna==2.8",
-        "pydantic==1.4",
+        "pydantic==1.6.2",
         "requests==2.22.0",
         "urllib3==1.25.8",
     ],
