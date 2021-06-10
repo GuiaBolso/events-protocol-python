@@ -20,11 +20,11 @@ setup(
     packages=find_packages(),
     install_requires=[
         "certifi==2021.5.30",
-        "chardet==4.0",
+        "chardet==4.0.*",
         "idna==2.10",
-        "pydantic==1.8",
-        "requests==2.25",
-        "urllib3==1.26",
+        "pydantic==1.8.*",
+        "requests==2.25.*",
+        "urllib3==1.26.*",
     ],
     extras_require={"doc": ["Sphinx==2.4.1", "sphinx-autoapi==1.2.1",],},
     project_urls={
