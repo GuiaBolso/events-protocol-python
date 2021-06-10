@@ -19,12 +19,12 @@ setup(
     license="Apache-2.0",
     packages=find_packages(),
     install_requires=[
-        "certifi==2019.11.28",
-        "chardet==3.0.4",
-        "idna==2.8",
-        "pydantic==1.4",
-        "requests==2.22.0",
-        "urllib3==1.25.8",
+        "certifi==2021.5.30",
+        "chardet==4.0.0",
+        "idna==2.10",
+        "pydantic==1.8.2",
+        "requests==2.25.1",
+        "urllib3==1.26.5",
     ],
     extras_require={"doc": ["Sphinx==2.4.1", "sphinx-autoapi==1.2.1",],},
     project_urls={
