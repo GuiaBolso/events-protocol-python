@@ -24,7 +24,7 @@ setup(
         "idna==2.8",
         "pydantic==1.4",
         "requests==2.22.0",
-        "urllib3==1.25.8",
+        "urllib3==1.26.5",
     ],
     extras_require={"doc": ["Sphinx==2.4.1", "sphinx-autoapi==1.2.1",],},
     project_urls={
