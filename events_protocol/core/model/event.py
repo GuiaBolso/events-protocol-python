@@ -29,9 +29,12 @@ class Event(CamelPydanticMixin):
     @property
     def user_id(self) -> Optional[int]:
         if self.identity is not None:
-            user = self.identity.get("userId")
+            user = self.identity.get("user")
             if user:
-                return int(user)
+                id = user.get("id")
+                if id:
+                    return int(id)
+        return None
 
     @property
     def origin(self) -> Optional[str]:

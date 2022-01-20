@@ -63,7 +63,7 @@ docs/_build/
 
 # vscode
 .vscode/
-
+.idea
 # Environments
 .env
 .venv
