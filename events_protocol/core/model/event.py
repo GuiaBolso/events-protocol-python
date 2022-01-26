@@ -3,6 +3,7 @@ from uuid import uuid4
 
 from .base import CamelPydanticMixin
 from .event_type import EventErrorType, EventSuccessType, EventType
+from .identity import Identity
 
 PayloadType = Dict[str, Any]
 
@@ -46,6 +47,10 @@ class Event(CamelPydanticMixin):
         return None
 
     @property
+    def get_identity(self) -> Identity:
+        return Identity(self.user_id, self.user_type)
+
+    @property
     def origin(self) -> Optional[str]:
         if self.metadata is not None:
             return self.metadata.get("origin")
@@ -54,7 +59,7 @@ class Event(CamelPydanticMixin):
 class ResponseEvent(Event):
     @staticmethod
     def from_event(
-        event: Event, event_type: EventType = EventSuccessType.SUCCESS
+            event: Event, event_type: EventType = EventSuccessType.SUCCESS
     ) -> "ResponseEvent":
         response_event = ResponseEvent.from_object(event)
         response_event.name = f"{response_event.name}:{event_type}"
