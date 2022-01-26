@@ -3,6 +3,6 @@ from typing import Optional
 
 
 @dataclass
-class Identity:
+class User:
     user_id: Optional[int]
     query_parameters: Optional[str]

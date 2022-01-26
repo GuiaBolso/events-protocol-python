@@ -3,7 +3,7 @@ from uuid import uuid4
 
 from .base import CamelPydanticMixin
 from .event_type import EventErrorType, EventSuccessType, EventType
-from .identity import Identity
+from .user import User
 
 PayloadType = Dict[str, Any]
 
@@ -47,8 +47,8 @@ class Event(CamelPydanticMixin):
         return None
 
     @property
-    def get_identity(self) -> Identity:
-        return Identity(self.user_id, self.user_type)
+    def get_identity(self) -> User:
+        return User(self.user_id, self.user_type)
 
     @property
     def origin(self) -> Optional[str]:
