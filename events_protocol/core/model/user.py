@@ -5,4 +5,4 @@ from typing import Optional
 @dataclass
 class User:
     user_id: Optional[int]
-    query_parameters: Optional[str]
+    user_type: Optional[str]
