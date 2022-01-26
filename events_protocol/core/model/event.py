@@ -59,7 +59,7 @@ class Event(CamelPydanticMixin):
 class ResponseEvent(Event):
     @staticmethod
     def from_event(
-            event: Event, event_type: EventType = EventSuccessType.SUCCESS
+        event: Event, event_type: EventType = EventSuccessType.SUCCESS
     ) -> "ResponseEvent":
         response_event = ResponseEvent.from_object(event)
         response_event.name = f"{response_event.name}:{event_type}"
