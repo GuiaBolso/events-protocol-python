@@ -47,7 +47,7 @@ class Event(CamelPydanticMixin):
         return None
 
     @property
-    def get_identity(self) -> User:
+    def user(self) -> User:
         return User(self.user_id, self.user_type)
 
     @property
