@@ -20,7 +20,9 @@ class EventClientTest(TestCase):
             "payload": {"test": "test"},
         }
         response_event = ResponseEvent(
-            name="event:name:response", version=1, payload={"test": "test"},
+            name="event:name:response",
+            version=1,
+            payload={"test": "test"},
         )
 
         post_method.return_value = response_event.to_json()
@@ -37,7 +39,9 @@ class EventClientTest(TestCase):
             "payload": {"test": "test"},
         }
         response_event = ResponseEvent(
-            name="event:name:error", version=1, payload={"test": "test"},
+            name="event:name:error",
+            version=1,
+            payload={"test": "test"},
         )
 
         post_method.return_value = response_event.to_json()

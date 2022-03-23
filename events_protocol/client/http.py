@@ -10,7 +10,12 @@ from .exception.request_exception import TimeoutException, FailedDependencyExcep
 class HttpClient:
     def post(self, url: str, headers: Dict[str, str], payload: str, timeout: int) -> str:
         try:
-            response = requests.post(url=url, headers=headers, data=payload, timeout=timeout,)
+            response = requests.post(
+                url=url,
+                headers=headers,
+                data=payload,
+                timeout=timeout,
+            )
         except (Timeout, ReadTimeout, ConnectTimeout) as exception:
             raise TimeoutException(f"Timeout calling {url}. Error {exception}")
 

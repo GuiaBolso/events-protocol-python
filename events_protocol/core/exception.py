@@ -8,7 +8,9 @@ class EventException(RuntimeError):
     _TYPE: EventErrorType = EventErrorType.GENERIC
 
     def __init__(
-        self, parameters: Dict[str, Optional[Any]], expected: bool = False,
+        self,
+        parameters: Dict[str, Optional[Any]],
+        expected: bool = False,
     ):
         super().__init__(self._CODE, parameters, self._TYPE, expected)
         self.parameters = parameters

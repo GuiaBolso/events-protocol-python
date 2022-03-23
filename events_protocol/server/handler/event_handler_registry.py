@@ -12,6 +12,5 @@ class EventRegister(ABC):
 
     @classmethod
     def register_event(cls):
-        """Call this method on startup application
-        """
+        """Call this method on startup application"""
         EventDiscovery.add(cls.event_name, cls.event_handler, cls.event_version or 1)

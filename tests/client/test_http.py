@@ -58,5 +58,8 @@ class HttpClientTest(TestCase):
 
         with self.assertRaises(FailedDependencyException):
             self.http_client.post(
-                url="http://test.com/", headers=None, payload=None, timeout=1000,
+                url="http://test.com/",
+                headers=None,
+                payload=None,
+                timeout=1000,
             )

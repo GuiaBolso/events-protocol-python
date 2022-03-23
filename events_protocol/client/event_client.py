@@ -36,7 +36,10 @@ class EventClient:
     ) -> ResponseEvent:
         response = self.http_client.post(
             url=self.url,
-            headers={"Content-Type": "application/json", "charset": "UTF-8",},
+            headers={
+                "Content-Type": "application/json",
+                "charset": "UTF-8",
+            },
             payload=request_event.to_json(),
             timeout=timeout or self.default_timeout,
         )
