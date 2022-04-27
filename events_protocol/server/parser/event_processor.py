@@ -61,7 +61,7 @@ class AsyncEventProcessor(EventProcessor):
         try:
             event: Event = cls.parse_event(raw_event)
             async with EventContextHolder.with_async_context(
-                event.id, event.flow_id, event.name, event.version, event.user_id
+                event.id, event.flow_id, event.name, event.version, event.user_id, event.user_type
             ) as _:
                 event_handler: AsyncEventHandler = EventDiscovery.get(event.name, event.version)
                 response: ResponseEvent = await event_handler.handle(event)
