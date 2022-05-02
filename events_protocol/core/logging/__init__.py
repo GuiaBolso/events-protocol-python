@@ -57,6 +57,7 @@ class JsonLogger(logging.LoggerAdapter):
                 EventID=event_context.id,
                 FlowID=event_context.flow_id,
                 UserId=event_context.user_id,
+                UserType=event_context.user_type,
                 Operation="{}:v{}".format(event_context.event_name, event_context.event_version),
                 logger=self.klass,
                 LoggerName=self.logger.name,

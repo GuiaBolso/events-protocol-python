@@ -14,6 +14,7 @@ class EventContext(BaseModel):
     event_name: typing.Optional[str]
     event_version: typing.Optional[int]
     user_id: typing.Optional[str]
+    user_type: typing.Optional[str]
 
 
 _context: ContextVar[EventContext] = ContextVar("event_context", default=None)
@@ -41,6 +42,7 @@ class EventContextHolder:
         event_name: str,
         event_version: int,
         user_id: str = None,
+        user_type: str = None,
     ):
         try:
             event_context = EventContext(
@@ -48,6 +50,7 @@ class EventContextHolder:
                 flow_id=context_flow_id,
                 event_name=event_name,
                 user_id=user_id,
+                user_type=user_type,
                 event_version=event_version,
             )
             cls.set(event_context)
@@ -64,6 +67,7 @@ class EventContextHolder:
         event_name: str,
         event_version: int,
         user_id: str = None,
+        user_type: str = None,
     ):
         try:
             event_context = EventContext(
@@ -71,6 +75,7 @@ class EventContextHolder:
                 flow_id=context_flow_id,
                 event_name=event_name,
                 user_id=user_id,
+                user_type=user_type,
                 event_version=event_version,
             )
             cls.set(event_context)
