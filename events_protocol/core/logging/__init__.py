@@ -65,7 +65,7 @@ class JsonLogger(logging.LoggerAdapter):
                     logger=self.klass,
                     LoggerName=self.logger.name,
                     ApplicationVersion=self.version,
-                           ),
+                ),
             )
 
             extra = kwargs.pop("extra", None)
