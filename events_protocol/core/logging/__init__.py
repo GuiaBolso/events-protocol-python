@@ -61,10 +61,6 @@ class JsonLogger(logging.LoggerAdapter):
                 LoggerName=self.logger.name,
                 ApplicationVersion=self.version,
             )
-            event_payload = dict(filter(lambda item: item[1] is not None, event_payload.items()))
-            event_payload = dict(
-                filter(lambda item: item[1] != "None:vNone", event_payload.items())
-            )
             _msg = dict(
                 timestamp_app=dt.utcnow().astimezone().isoformat(timespec="milliseconds"),
                 message=msg,
