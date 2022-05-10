@@ -51,7 +51,7 @@ class JsonLogger(logging.LoggerAdapter):
     def log(self, level, msg, *args, **kwargs):
         if self.isEnabledFor(level):
             event_context = EventContextHolder.get()
-            event_payload = dict(
+            event_info = dict(
                 EventID=event_context.id,
                 FlowID=event_context.flow_id,
                 UserId=event_context.user_id,
@@ -66,7 +66,7 @@ class JsonLogger(logging.LoggerAdapter):
                 message=msg,
                 log_type="APPLICATION",
                 log_level=logging.getLevelName(level),
-                event=event_payload,
+                event=event_info,
             )
 
             extra = kwargs.pop("extra", None)
