@@ -51,9 +51,7 @@ class JsonLogger(logging.LoggerAdapter):
     def log(self, level, msg, *args, **kwargs):
         if self.isEnabledFor(level):
             event_context = EventContextHolder.get()
-            _msg = dict(
-                severity=logging.getLevelName(level),
-                logmessage=msg,
+            event_info = dict(
                 EventID=event_context.id,
                 FlowID=event_context.flow_id,
                 UserId=event_context.user_id,
@@ -61,8 +59,14 @@ class JsonLogger(logging.LoggerAdapter):
                 Operation="{}:v{}".format(event_context.event_name, event_context.event_version),
                 logger=self.klass,
                 LoggerName=self.logger.name,
-                logdate=dt.utcnow().isoformat(),
                 ApplicationVersion=self.version,
+            )
+            _msg = dict(
+                timestamp_app=dt.utcnow().astimezone().isoformat(timespec="milliseconds"),
+                message=msg,
+                log_type="APPLICATION",
+                log_level=logging.getLevelName(level),
+                event=event_info,
             )
 
             extra = kwargs.pop("extra", None)
@@ -77,6 +81,7 @@ class JsonLogger(logging.LoggerAdapter):
                 _msg["extra"] = extra
             if level == logging.ERROR and kwargs.get("exc_info"):
                 args = tuple()
+
                 fmt = logging.Formatter()
                 _exc = sys.exc_info()
                 _msg["stackTrace"] = fmt.formatException(_exc)
