@@ -15,6 +15,10 @@ make dev
 pre-commit install
 ```
 Ao commitar, a lib Black será acionada automaticamente para fazer o linting do código
+
+Caso o código falhe na formatação, será emitido um status "Failed",e a biblioteca é acionada para reformatar
+
+Então, basta só commitar novamente para registrar as mudanças, dessa vez com a formatação correta
 ### Como usar
 #### Client
 
