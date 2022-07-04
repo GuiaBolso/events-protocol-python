@@ -8,8 +8,14 @@
     <a href="https://pypi.org/project/events-protocol/"><img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/events-protocol.svg"></a>
 </p>
 
+### Configurando para desenvolvimento local
+Para fazer alterações na biblioteca localmente e passar pelos checks de formatação é necessário executar os seguintes passos:
+```
+make dev
+pre-commit install
+```
+Ao commitar, a lib Black será acionada automaticamente para fazer o linting do código
 ### Como usar
-
 #### Client
 
 As informações essenciais para enviar o evento são: *url*, *name*, *version* e *payload*.
