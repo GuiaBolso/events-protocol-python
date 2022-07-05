@@ -10,11 +10,20 @@
 
 ### Configurando para desenvolvimento local
 Para fazer alterações na biblioteca localmente e passar pelos checks de formatação é necessário executar os seguintes passos:
+
+Primeiramente, deve-se instalar o [Homebrew](https://brew.sh/index_pt-br).
+
+Depois, podemos instalar o pipenv e o pyenv.
+```
+pip install pipenv
+brew install pyenv
+```
+Então, deve-se buildar a biblioteca pelo Makefile, e depois de configurado o ambiente, deve-se garantir o funcionamento do pre-commit
 ```
 make dev
 pre-commit install
 ```
-Ao commitar, a lib Black será acionada automaticamente para fazer o linting do código.
+Com essa configuração aplicada, ao commitar a lib Black será acionada automaticamente para fazer o linting do código.
 
 Caso o código falhe na formatação, será emitido um status "Failed", e a biblioteca é acionada para reformatar.
 
