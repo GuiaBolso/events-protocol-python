@@ -29,7 +29,6 @@ coverage: ## Run tests opening html coverage
 dev: ## Install dev needed packages
 	@pipenv install --dev
 	@pipenv shell
-	@pre-commit install
 
 help: ## Show some help
 	@echo

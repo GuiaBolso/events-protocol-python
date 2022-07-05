@@ -8,8 +8,27 @@
     <a href="https://pypi.org/project/events-protocol/"><img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/events-protocol.svg"></a>
 </p>
 
-### Como usar
+### Configurando para desenvolvimento local
+Para fazer alterações na biblioteca localmente e passar pelos checks de formatação é necessário executar os seguintes passos:
 
+Primeiramente, deve-se instalar o [Homebrew](https://brew.sh/index_pt-br).
+
+Depois, podemos instalar o pipenv e o pyenv.
+```
+pip install pipenv
+brew install pyenv
+```
+Então, deve-se buildar a biblioteca pelo Makefile, e depois de configurado o ambiente, deve-se garantir o funcionamento do pre-commit
+```
+make dev
+pre-commit install
+```
+Com essa configuração aplicada, ao commitar a lib Black será acionada automaticamente para fazer o linting do código.
+
+Caso o código falhe na formatação, será emitido um status "Failed", e a biblioteca é acionada para reformatar.
+
+Então, basta só commitar novamente para registrar as mudanças, dessa vez com a formatação correta.
+### Como usar
 #### Client
 
 As informações essenciais para enviar o evento são: *url*, *name*, *version* e *payload*.
