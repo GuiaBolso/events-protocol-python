@@ -1,7 +1,7 @@
-## [0.2.0] - 13-02-20
+## [0.2.0] - 18-10-22
 **Author**
 
-Romulo Rosa - romulo.rosa@guiabolso.com.br
+Gustavo Dutra - gustavo.dutra@picpay.com.br
 
 ### Changes
 - Removed event registry and the event handler will be used in place
