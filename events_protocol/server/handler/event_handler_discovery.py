@@ -1,3 +1,4 @@
+from dataclasses import is_dataclass
 import re
 import typing
 
@@ -14,8 +15,6 @@ class EventDiscovery(LoggableMixin):
 
     @classmethod
     def add(cls, event_name: str, event_handler: EventHandler, version: int = 1) -> None:
-        if not issubclass(event_handler, EventHandler):
-            raise TypeError(f"event_handler must be of type EventHandler")
         res: re.Match = re.match(cls._EVENT_NAME_STD, event_name)
         if res is None or res.string != event_name:
             raise ValueError(
@@ -25,10 +24,10 @@ class EventDiscovery(LoggableMixin):
         cls._events[(event_name, version)] = event_handler
 
     @classmethod
-    def get(cls, event_name: str, version: int = 1) -> EventHandler:
-        event: typing.Union[EventHandler, None] = cls._events.get((event_name, version))
+    def get(cls, event_name: str, event_version: int = 1) -> EventHandler:
+        event: typing.Union[EventHandler, None] = cls._events.get((event_name, event_version))
         if event is None:
             raise EventNotFoundException(
-                f"Event Name {event_name} of version {version} was not found"
+                f"Event Name {event_name} of version {event_version} was not found"
             )
         return event

@@ -5,5 +5,4 @@ from .client import EventClient
 from .core.model.base import BaseModel
 from .core.model.event import Event, ResponseEvent
 from .server.handler.event_handler import EventHandler
-from .server.handler.event_handler_registry import EventRegister
 from .server.parser.event_processor import EventProcessor
