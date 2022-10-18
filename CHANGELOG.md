@@ -1,3 +1,11 @@
+## [0.2.0] - 13-02-20
+**Author**
+
+Romulo Rosa - romulo.rosa@guiabolso.com.br
+
+### Changes
+- Removed event registry and the event handler will be used in place
+
 ## [0.1.0] - 13-02-20
 **Author**
 
