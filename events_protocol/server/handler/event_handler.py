@@ -29,15 +29,6 @@ class EventHandler(ABC):
         except ValidationError as exception:
             raise MissingEventInformationException(parameters=exception.to_dict())
 
-    #@classmethod
-    #def register_event(cls):
-    #    """Call this method on startup application
-    #    """
-    #    from .event_handler_discovery import EventDiscovery
-    #
-    #    EventDiscovery.add(cls.event_name, cls, cls.event_version or 1)
-
-
 class AsyncEventHandler(EventHandler, ABC):
     _SCHEMA: CamelPydanticMixin = None
 
