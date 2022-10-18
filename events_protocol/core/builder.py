@@ -2,10 +2,14 @@ import typing
 from uuid import uuid4
 
 from events_protocol.core.exception import EventException
-from events_protocol.core.logging.mixins.loggable import LoggableMixin
-from events_protocol.core.model.event import (Event, EventMessage, PayloadType,
-                                              ResponseEvent)
+from events_protocol.core.model.event import (
+    Event,
+    EventMessage,
+    PayloadType,
+    ResponseEvent,
+)
 from events_protocol.core.model.event_type import EventSuccessType
+from events_protocol.core.logging.mixins.loggable import LoggableMixin
 
 
 class EventBuilder(LoggableMixin):

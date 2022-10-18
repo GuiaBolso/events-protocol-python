@@ -1,11 +1,13 @@
 from unittest import TestCase
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch, MagicMock
 
-from requests.exceptions import ConnectTimeout, ReadTimeout, Timeout
+from requests.exceptions import Timeout, ReadTimeout, ConnectTimeout
 
-from events_protocol.client.exception.request_exception import (
-    FailedDependencyException, TimeoutException)
 from events_protocol.client.http import HttpClient
+from events_protocol.client.exception.request_exception import (
+    TimeoutException,
+    FailedDependencyException,
+)
 
 
 class HttpClientTest(TestCase):

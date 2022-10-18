@@ -1,10 +1,10 @@
+import requests
+
 from typing import Dict
 
-import requests
-from requests.exceptions import ConnectTimeout, ReadTimeout, Timeout
+from requests.exceptions import Timeout, ReadTimeout, ConnectTimeout
 
-from .exception.request_exception import (FailedDependencyException,
-                                          TimeoutException)
+from .exception.request_exception import TimeoutException, FailedDependencyException
 
 
 class HttpClient:

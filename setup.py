@@ -1,8 +1,8 @@
 from os.path import dirname, join
-
-from setuptools import find_packages, setup
+from setuptools import setup, find_packages
 
 import events_protocol
+
 
 with open(join(dirname(__file__), "README.md")) as _file:
     long_description = _file.read()
