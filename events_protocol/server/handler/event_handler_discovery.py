@@ -1,10 +1,11 @@
-from dataclasses import is_dataclass
 import re
 import typing
+from dataclasses import is_dataclass
 
 from events_protocol.core.exception import EventNotFoundException
 from events_protocol.core.logging.mixins.loggable import LoggableMixin
-from events_protocol.server.handler.event_handler import EventHandler, AsyncEventHandler
+from events_protocol.server.handler.event_handler import (AsyncEventHandler,
+                                                          EventHandler)
 
 
 class EventDiscovery(LoggableMixin):

@@ -2,6 +2,13 @@ ifndef VERBOSE
 MAKEFLAGS += --no-print-directory -s
 endif
 
+lint: ## Remove unused imports and variables/Format using black
+	@echo "---- Refactorying ----"
+	@autoflake --remove-all-unused-imports --remove-duplicate-keys --remove-unused-variables --in-place --exclude globs -r *.py
+	@python3 -m black *.py && python3 -m black events_protocol/ && python3 -m black tests/
+	@python3 -m pyflakes . | true
+	@python3 -m isort . | true
+
 refactory: ## Remove unused imports and variables/Format using black
 	@echo "---- Refactorying ----"
 	@autoflake --remove-all-unused-imports --remove-duplicate-keys --remove-unused-variables --in-place --exclude globs -r *
