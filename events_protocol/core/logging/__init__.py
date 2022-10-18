@@ -4,10 +4,10 @@ import queue
 import re
 import sys
 import typing
+from datetime import datetime as dt
 from logging.handlers import QueueHandler, QueueListener
 
 from events_protocol.core.context import EventContextHolder
-from datetime import datetime as dt
 
 
 def _get_klass_name(klass: typing.Any) -> str:

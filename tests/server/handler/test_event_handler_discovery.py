@@ -4,7 +4,8 @@ from unittest import TestCase
 from events_protocol.core.exception import EventNotFoundException
 from events_protocol.core.logging.supressor import supress_log
 from events_protocol.server.handler.event_handler import EventHandler
-from events_protocol.server.handler.event_handler_discovery import EventDiscovery
+from events_protocol.server.handler.event_handler_discovery import \
+    EventDiscovery
 
 
 class TestEventDiscovery(TestCase):

@@ -2,7 +2,8 @@ from unittest import TestCase
 from unittest.mock import patch
 
 from events_protocol.client.event_client import EventClient
-from events_protocol.client.exception.request_exception import BadProtocolException
+from events_protocol.client.exception.request_exception import \
+    BadProtocolException
 from events_protocol.core.context import EventContext, EventContextHolder
 from events_protocol.core.model.event import ResponseEvent
 from events_protocol.core.model.event_type import EventErrorType

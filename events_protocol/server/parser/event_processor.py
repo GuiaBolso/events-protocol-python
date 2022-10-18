@@ -1,17 +1,16 @@
 import json
 
+from events_protocol.core.builder import EventBuilder
 from events_protocol.core.context import EventContextHolder
-from events_protocol.core.exception import (
-    EventException,
-    EventParsingException,
-)
+from events_protocol.core.exception import (EventException,
+                                            EventParsingException)
 from events_protocol.core.logging.mixins.loggable import LoggableMixin
 from events_protocol.core.model.base import ValidationError
 from events_protocol.core.model.event import Event, ResponseEvent
-from events_protocol.server.handler.event_handler import EventHandler, AsyncEventHandler
-from events_protocol.server.handler.event_handler_discovery import EventDiscovery
-
-from events_protocol.core.builder import EventBuilder
+from events_protocol.server.handler.event_handler import (AsyncEventHandler,
+                                                          EventHandler)
+from events_protocol.server.handler.event_handler_discovery import \
+    EventDiscovery
 
 
 class EventProcessor(LoggableMixin):
