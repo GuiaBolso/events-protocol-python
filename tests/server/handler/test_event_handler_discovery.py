@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from unittest import TestCase
 
 from events_protocol.core.exception import EventNotFoundException

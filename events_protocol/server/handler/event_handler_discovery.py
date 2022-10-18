@@ -1,6 +1,5 @@
 import re
 import typing
-from dataclasses import is_dataclass
 
 from events_protocol.core.exception import EventNotFoundException
 from events_protocol.core.logging.mixins.loggable import LoggableMixin
