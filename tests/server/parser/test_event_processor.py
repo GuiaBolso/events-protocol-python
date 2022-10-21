@@ -8,7 +8,6 @@ from events_protocol.core.model.event import Event, CamelPydanticMixin, Response
 from events_protocol.core.model.event_type import EventErrorType
 from tests.utils.sync import make_sync
 from events_protocol.server.handler.event_handler import EventHandler
-from events_protocol.server.handler.event_handler_registry import EventRegister
 from events_protocol.server.parser.event_processor import AsyncEventProcessor, EventProcessor
 
 
@@ -18,16 +17,12 @@ class FakeSchema(CamelPydanticMixin):
 
 class FakeHandler(EventHandler):
     _SCHEMA = FakeSchema
+    event_version = 2
+    event_name = "test:event"
 
     @classmethod
     async def handle(cls, event: Event):
         return event
-
-
-class FakeRegister(EventRegister):
-    event_version = 2
-    event_name = "awesome:test:here"
-    event_handler = FakeHandler
 
 
 class TestAsyncEventProcessor(TestCase):
@@ -67,10 +62,15 @@ class TestAsyncEventProcessor(TestCase):
     @supress_log
     @make_sync
     async def test_process_event_founding_fake_event(self):
-        FakeRegister.register_event()
+        event_name = "test:event"
+        event_version = 1
+        FakeHandler(
+            event_name=event_name,
+            event_version=event_version,
+        )
         test_event = Event(
-            name=FakeRegister.event_name,
-            version=FakeRegister.event_version,
+            name=event_name,
+            version=event_version,
             id=str(uuid4()),
             flow_id=str(uuid4()),
             payload={},

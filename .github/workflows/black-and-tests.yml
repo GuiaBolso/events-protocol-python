@@ -39,7 +39,5 @@ jobs:
       - uses: dschep/install-pipenv-action@v1
       - name: Install dependencies
         run: pipenv --python ${{ matrix.python_version }} sync -d
-      - name: Lint with Black
-        run: pipenv run black --check events_protocol
       - name: Tests
         run: pipenv run pytest --cov=events_protocol tests/
