@@ -1,9 +1,8 @@
-from events_protocol.core.logging import JsonLogger
-
+from asyncio.log import logger
+import logging
+from events_protocol.core.logging.logger import Logger
+from events_protocol.core.logging.picpay_logger import PicpayLogger
 
 class LoggableMixin:
-    logger = JsonLogger()
+    logger = PicpayLogger() 
 
-    def __new__(cls, *args, **kwargs):
-        cls.logger = JsonLogger(cls)
-        return super().__new__(cls)
