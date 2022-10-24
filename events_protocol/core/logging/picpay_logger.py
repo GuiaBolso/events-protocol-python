@@ -150,6 +150,17 @@ class PicpayLogger(logging.Logger):
         self.internal_logger.log(level, message)
 
     def _log(self, level, message, *args, **kwargs):
+        """
+        Overrides log method of the logging library
+
+        Parameters
+        ----------
+        level: int
+            Logging level. Set using the enum defined in the logging std library 
+
+        message: str
+            Message that will be send to the logger
+        """
         if self.is_production_environment:
             self.__prod_log(level, message)
         else:
