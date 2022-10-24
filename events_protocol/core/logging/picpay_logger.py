@@ -1,3 +1,4 @@
+from glob import glob
 import logging
 import json
 
@@ -6,6 +7,19 @@ from events_protocol.core.context import EventContextHolder
 from datetime import datetime 
 
 class PicpayLogger(logging.Logger):
+    """
+    Create and format loggers in the PicPay standard format
+
+    Parameters
+    ----------
+    level: int
+        Logging level. Set using the enum defined in the logging std library 
+
+    Returns
+    -------
+    logging.Logger
+        Interface to use the logs of the logging library 
+    """
 
     logger_name = 'events_protocol'
     version: str = "UNDEFINED"
@@ -17,23 +31,59 @@ class PicpayLogger(logging.Logger):
         level: int= logging.INFO,
         environment: str= "PRD",
     ) -> None:
+        """
+        Custom constructor to create the loggers in the PicPay standard
+
+        Parameters
+        ----------
+        level: int
+            Logging level. Set using the enum defined in the logging std library 
+
+        environment: str
+            Set the current environment that will be used in the application.
+            If it's PRD or HML it will format the logger in the PicPay application standards.
+            Otherwise it'll use development settings
+        """
         if cls.logger_name in logging.root.manager.loggerDict.keys():
             cls.internal_logger = logging.getLogger(cls.logger_name)
             cls.is_production_environment = IS_PROD_ENV
         else:
-            cls.create_logger_with_environment(cls.logger_name, environment)
+            cls.__create_logger_with_environment(cls.logger_name, environment)
         super().__init__(cls.logger_name, level)
         
     @classmethod
-    def set_version(cls, version: str):
+    def set_version(cls, version: str) -> None:
+        """
+        Set application version that will be logged
+
+        Parameters
+        ----------
+        version: str
+            Application version
+        """
         cls.version = version
 
-    def create_logger_with_environment(
+    def __create_logger_with_environment(
         self, 
-        name: str = __name__,
+        name: str = "events_protocol",
         environment: str = "PRD",
-    ):
-        global IS_PROD_ENV
+    ) -> None:
+        """
+        Creates the logger using the desired environment 
+
+        Parameters
+        ----------
+        name: str
+            Application version
+
+        environment: str
+            Set the current environment that will be used in the application.
+            If it's PRD or HML it will format the logger in the PicPay application standards.
+            Otherwise it'll use development settings
+            Default PRD
+        """
+        if "IS_PROD_ENV" not in globals(): 
+            global IS_PROD_ENV
         if environment.upper() == ('PRD' or 'HML'):
             self.is_production_environment = True
             self.internal_logger = Logger.get_logger(
@@ -50,10 +100,32 @@ class PicpayLogger(logging.Logger):
             )
             IS_PROD_ENV = False
 
-    def __dev_log(self, level, msg, *args, **kawrgs):
-        self.internal_logger.log(level, msg)
+    def __dev_log(self, level, message, *args, **kawrgs):
+        """
+        Default logger. Used for development environment.
 
-    def __prod_log(self, level, msg, *args, **kwargs):
+        Parameters
+        ----------
+        level: int
+            Logging level. Set using the enum defined in the logging std library 
+
+        message: str
+            Message that will be send to the logger
+        """
+        self.internal_logger.log(level, message)
+
+    def __prod_log(self, level, message, *args, **kwargs):
+        """
+        Production format logger. Used for production and QA environment.
+
+        Parameters
+        ----------
+        level: int
+            Logging level. Set using the enum defined in the logging std library 
+
+        message: str
+            Message that will be send to the logger
+        """
         event_context = EventContextHolder.get()
         event_info = dict(
             EventID=event_context.id,
@@ -65,20 +137,20 @@ class PicpayLogger(logging.Logger):
             LoggerName=__name__,
             ApplicationVersion=self.version,
         )
-        _msg = dict(
+        _message = dict(
             timestamp_app=datetime.utcnow().astimezone().isoformat(timespec="milliseconds"),
-            message=msg,
+            message=message,
             log_type="APPLICATION",
             log_level=logging.getLevelName(level),
             event=event_info,
         )
 
-        msg = str(json.dumps(_msg))
+        message = str(json.dumps(_message))
 
-        self.internal_logger.log(level, msg)
+        self.internal_logger.log(level, message)
 
-    def _log(self, level, msg, *args, **kwargs):
+    def _log(self, level, message, *args, **kwargs):
         if self.is_production_environment:
-            self.__prod_log(level, msg)
+            self.__prod_log(level, message)
         else:
-            self.__dev_log(level, msg)
+            self.__dev_log(level, message)

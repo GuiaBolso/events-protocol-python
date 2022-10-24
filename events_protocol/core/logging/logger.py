@@ -4,13 +4,13 @@ from typing import List
 from functools import update_wrapper
 
 class Logger(logging.LoggerAdapter):
-    """This classe is responsible to be an interface for other classes and
+    """This class is responsible to be an interface for other classes and
     modules use the logging with the Events Protocol format.
 
     Returns
     -------
     Events Protocol.package.utils.Logger
-        This classe is responsible to be an interface for other classes and modules use the logging with the Events Protocol format
+        This class is responsible to be an interface for other classes and modules use the logging with the Events Protocol format
     """
 
     HANDLERS: List[StreamHandler] = [logging.StreamHandler()]
