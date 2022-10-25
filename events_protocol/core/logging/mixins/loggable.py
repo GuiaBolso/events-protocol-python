@@ -1,9 +1,5 @@
-from events_protocol.core.logging import JsonLogger
-
+from events_protocol.core.logging.picpay_logger import PicpayLogger
 
 class LoggableMixin:
-    logger = JsonLogger()
+    logger = PicpayLogger() 
 
-    def __new__(cls, *args, **kwargs):
-        cls.logger = JsonLogger(cls)
-        return super().__new__(cls)
