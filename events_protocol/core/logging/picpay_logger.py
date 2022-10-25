@@ -88,7 +88,7 @@ class PicpayLogger(logging.Logger):
             self.is_production_environment = True
             self.internal_logger = Logger.get_logger(
                 name, 
-                level= logging.ERROR,
+                level= logging.INFO,
                 log_format="%(message)s"
             )
             IS_PROD_ENV = True
@@ -96,7 +96,7 @@ class PicpayLogger(logging.Logger):
             self.is_production_environment = False
             self.internal_logger = Logger.get_logger(
                 name, 
-                level= logging.INFO
+                level= logging.DEBUG
             )
             IS_PROD_ENV = False
 
@@ -133,8 +133,7 @@ class PicpayLogger(logging.Logger):
             UserId=str(event_context.user_id),
             UserType=event_context.user_type,
             Operation="{}:v{}".format(event_context.event_name, event_context.event_version),
-            logger=__name__,
-            LoggerName=__name__,
+            logger=self.name,
             ApplicationVersion=self.version,
         )
         _message = dict(
