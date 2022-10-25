@@ -16,7 +16,7 @@ class EventBuilder(LoggableMixin):
     @classmethod
     def error_for(
         cls,
-        exception: typing.Union[EventException],
+        exception: EventException,
         event: typing.Optional[Event] = Event(name="", version=1, id=str(uuid4())),
         id_flow=str(uuid4()),
         loggable=True,
